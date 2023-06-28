@@ -7,13 +7,13 @@ services:
     tty: true
     privileged: true
     volumes:
-      - /Volumes/kamiyaSSDX5/DockerVolume/python/crypto_prediction_devops:/home/kamiken/git/crypto_prediction_devops
-      - /Volumes/kamiyaSSDX5/DockerVolume/python/crypto_prediction_dwh:/home/kamiken/git/crypto_prediction_dwh
-      - /Volumes/kamiyaSSDX5/DockerVolume/python/crypto_prediction_ml_dl:/home/kamiken/git/crypto_prediction_ml_dl
+      - /Volumes/kamiyaSSDX5/DockerVolume/python/git:/home/kamiken/git
+      - /Volumes/kamiyaSSDX5/DockerVolume/python/polo-sdk-python:/home/kamiken/polo_sdk
       - /Volumes/kamiyaSSDX5/DockerVolume/kafka:/home/kamiken/kafka
       - /Volumes/kamiyaSSDX5/DockerVolume/spark:/home/kamiken/spark
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.9
     ports:
       - '21022:22'
     deploy:

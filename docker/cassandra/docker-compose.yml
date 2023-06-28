@@ -1,32 +1,34 @@
 version: '3.7'
 services:
   cassandra1:
-      image: cassandra:4.1.0
-      container_name: cassandra1
-      hostname: cassandra1
-      ports:
-          - "9042:9042"
-          - "7000:7000"
-      volumes:
-          - /Volumes/kamiyaSSDX5/DockerVolume/cassandra1/data:/var/lib/cassandra
-          - /Volumes/kamiyaSSDX5/DockerVolume/cassandra1/etc:/etc/cassandra
-      networks:
-        - shared-network
-      environment: &environment    # Declare and save environments nvariables into "environment"
-          CASSANDRA_SEEDS: "cassandra1,cassandra2"    # The first two nodes will be seeds
-          CASSANDRA_CLUSTER_NAME: SolarSystem
-          CASSANDRA_DC: Mars
-          CASSANDRA_RACK: rack1
-          CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
-          CASSANDRA_NUM_TOKENS: 128
-          HEAP_NEWSIZE: 1G
-          MAX_HEAP_SIZE: 2G
+    image: cassandra:4.1.0
+    container_name: cassandra1
+    hostname: cassandra1
+    ports:
+        - "9042:9042"
+        - "7000:7000"
+    volumes:
+        - /Volumes/kamiyaSSDX5/DockerVolume/cassandra1/data:/var/lib/cassandra
+        - /Volumes/kamiyaSSDX5/DockerVolume/cassandra1/etc:/etc/cassandra
+    networks:
+      shared-network:
+        ipv4_address: 172.29.0.2
+    environment: &environment    # Declare and save environments nvariables into "environment"
+        CASSANDRA_SEEDS: "cassandra1,cassandra2"    # The first two nodes will be seeds
+        CASSANDRA_CLUSTER_NAME: SolarSystem
+        CASSANDRA_DC: Mars
+        CASSANDRA_RACK: rack1
+        CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+        CASSANDRA_NUM_TOKENS: 128
+        HEAP_NEWSIZE: 1G
+        MAX_HEAP_SIZE: 2G
   cassandra2:
     image: cassandra:4.1.0
     container_name: cassandra2
     hostname: cassandra2
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.3
     ports:
       - "9043:9042"
       - "7001:7000"
@@ -41,7 +43,8 @@ services:
     container_name: cassandra3
     hostname: cassandra3
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.4
     ports:
       - "9044:9042"
       - "7002:7000"
