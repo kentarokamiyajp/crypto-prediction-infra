@@ -12,9 +12,8 @@ RUN useradd $USERNAME &&\
     echo '$USERNAME ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers &&\
     mkdir /home/$USERNAME/.ssh
 
-COPY id_rsa.pub /home/$USERNAME/.ssh/
+COPY authorized_keys /home/$USERNAME/.ssh/
 RUN chmod 755 /home/$USERNAME/.ssh
-RUN cat /home/$USERNAME/.ssh/id_rsa.pub >> /home/$USERNAME/.ssh/authorized_keys
 RUN chmod 755 /home/$USERNAME/.ssh/authorized_keys
 
 RUN yum update -y && yum -y install openssh openssh-server openssh-clients sudo initscripts

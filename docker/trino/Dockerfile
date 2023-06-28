@@ -25,7 +25,6 @@ EXPOSE 22
 WORKDIR /home/$USERNAME/
 
 RUN mkdir /home/kamiken/.ssh/
-COPY id_rsa.pub /home/kamiken/.ssh/
+COPY authorized_keys /home/kamiken/.ssh/
 RUN chmod 755 /home/kamiken/.ssh
-RUN cat /home/kamiken/.ssh/id_rsa.pub >> /home/kamiken/.ssh/authorized_keys
 RUN chmod 755 /home/kamiken/.ssh/authorized_keys
