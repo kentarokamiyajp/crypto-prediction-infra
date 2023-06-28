@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  trino:
+    build:
+      dockerfile: Dockerfile
+    hostname: trino
+    ports:
+      - '8881:8080'
+      - '22022:22'
+    volumes:
+      - /home/kentaro/Documents/DockerVolume/trino/etc:/etc/trino
+      - /home/kentaro/Documents/git_repo/hadoop_project/docker/hadoop_docker/conf:/etc/hadoop
+    networks:
+      - trino-network
+      - shared-network
+
+networks:
+  trino-network:
+    driver: bridge
+  shared-network:
+    external: true

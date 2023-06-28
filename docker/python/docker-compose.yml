@@ -1,0 +1,24 @@
+version: "3"
+services:
+  python3:
+    build:
+      dockerfile: Dockerfile
+    container_name: "python3"
+    tty: true
+    privileged: true
+    volumes:
+      - /Volumes/kamiyaSSDX5/DockerVolume/python/hadoop_project:/home/kamiken/hadoop_project
+      - /Volumes/kamiyaSSDX5/DockerVolume/kafka:/home/kamiken/kafka
+      - /Volumes/kamiyaSSDX5/DockerVolume/spark:/home/kamiken/spark
+    networks:
+      - shared-network
+    ports:
+      - '21022:22'
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+
+networks:
+  shared-network:
+    external: true

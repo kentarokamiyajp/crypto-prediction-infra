@@ -1,0 +1,69 @@
+version: '3.7'
+services:
+  zookeeper:
+    image: 'confluentinc/cp-zookeeper:latest'
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - '2188:2181'
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - kafka-network
+
+  kafka:
+    build:
+      dockerfile: Dockerfile
+    hostname: kafka
+    privileged: true
+    tty: true
+    ports:
+      - '9092:9092'
+      - '19092:19092'
+      - '20022:22'
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://host.docker.internal:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181/kafka"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - /Volumes/kamiyaSSDX5/DockerVolume/kafka/data:/var/lib/kafka/data
+      - /Volumes/kamiyaSSDX5/DockerVolume/kafka:/var/lib/kafka
+    depends_on:
+      - zookeeper
+    networks:
+      - kafka-network
+      - shared-network
+
+  kafka-manager:
+    image: 'kafkamanager/kafka-manager:3.0.0.4'
+    restart: unless-stopped
+    container_name: kafka-manager
+    ports:
+      - '9900:9000'
+    environment:
+      ZK_HOSTS: zookeeper:2181
+    networks:
+      - kafka-network
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    restart: "no"
+    ports:
+      - "9990:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka:9092
+      JVM_OPTS: "-Xms32M -Xmx64M"
+      SERVER_SERVLET_CONTEXTPATH: /
+    depends_on:
+      - kafka
+    networks:
+      - kafka-network
+
+networks:
+  kafka-network:
+    driver: bridge
+  shared-network:
+    external: true
