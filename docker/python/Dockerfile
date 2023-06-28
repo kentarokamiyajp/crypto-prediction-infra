@@ -21,7 +21,7 @@ RUN make
 RUN make install
 
 # install openjdk
-RUN apt-get install -y openjdk-11-jdk
+RUN apt-get install -y default-jdk
 
 # Add user
 USER root

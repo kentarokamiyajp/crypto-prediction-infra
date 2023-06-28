@@ -22,6 +22,7 @@ else
     pyenv virtualenv 3.10.9 crypto
     pyenv local crypto
     pip install -r /home/kamiken/src/requirements.txt
+    python3.10 -m pip install --upgrade pip
 
     cat /home/kamiken/init_bashrc >> /home/kamiken/.bashrc
 
