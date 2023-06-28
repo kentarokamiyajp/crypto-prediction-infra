@@ -7,7 +7,9 @@ services:
     tty: true
     privileged: true
     volumes:
-      - /Volumes/kamiyaSSDX5/DockerVolume/python/hadoop_project:/home/kamiken/hadoop_project
+      - /Volumes/kamiyaSSDX5/DockerVolume/python/crypto_prediction_devops:/home/kamiken/git/crypto_prediction_devops
+      - /Volumes/kamiyaSSDX5/DockerVolume/python/crypto_prediction_dwh:/home/kamiken/git/crypto_prediction_dwh
+      - /Volumes/kamiyaSSDX5/DockerVolume/python/crypto_prediction_ml_dl:/home/kamiken/git/crypto_prediction_ml_dl
       - /Volumes/kamiyaSSDX5/DockerVolume/kafka:/home/kamiken/kafka
       - /Volumes/kamiyaSSDX5/DockerVolume/spark:/home/kamiken/spark
     networks:

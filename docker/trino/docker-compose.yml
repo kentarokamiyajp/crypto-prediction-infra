@@ -9,7 +9,7 @@ services:
       - '22022:22'
     volumes:
       - /home/kentaro/Documents/DockerVolume/trino/etc:/etc/trino
-      - /home/kentaro/Documents/git_repo/hadoop_project/docker/hadoop_docker/conf:/etc/hadoop
+      - /home/kentaro/Documents/git/crypto_prediction_devops/docker/hadoop_docker/conf:/etc/hadoop
     networks:
       - trino-network
       - shared-network
