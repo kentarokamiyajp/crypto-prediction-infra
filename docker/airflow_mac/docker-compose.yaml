@@ -63,10 +63,10 @@ x-airflow-common:
     AIRFLOW__LOGGING__CELERY_LOGGING_LEVEL: 'ERROR'
     AIRFLOW__LOGGING__LOGGING_LEVEL: 'ERROR'
   volumes:
-    - /home/kentaro/Documents/DockerVolume/airflow/dags:/opt/airflow/dags
-    - /home/kentaro/Documents/DockerVolume/airflow/logs:/opt/airflow/logs
-    - /home/kentaro/Documents/DockerVolume/airflow/plugins:/opt/airflow/plugins
-    - /home/kentaro/Documents/DockerVolume/airflow/data:/opt/airflow/data
+    - /Volumes/kamiyaSSDX5/DockerVolume/airflow/dags:/opt/airflow/dags
+    - /Volumes/kamiyaSSDX5/DockerVolume/airflow/logs:/opt/airflow/logs
+    - /Volumes/kamiyaSSDX5/DockerVolume/airflow/plugins:/opt/airflow/plugins
+    - /Volumes/kamiyaSSDX5/DockerVolume/airflow/data:/opt/airflow/data
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -83,19 +83,20 @@ services:
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
-      - /home/kentaro/Documents/DockerVolume/airflow/postgresql/data:/var/lib/postgresql/data
+      - /Volumes/kamiyaSSDX5/DockerVolume/airflow/postgresql/data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 5s
       retries: 5
     restart: always
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.10
 
   redis:
     image: redis:latest
     volumes:
-      - /home/kentaro/Documents/DockerVolume/airflow/redis/data:/data
+      - /Volumes/kamiyaSSDX5/DockerVolume/airflow/redis/data:/data
     expose:
       - 6379
     healthcheck:
@@ -105,7 +106,8 @@ services:
       retries: 50
     restart: always
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.11
 
   airflow-webserver:
     <<: *airflow-common
@@ -124,7 +126,8 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.12
 
   airflow-scheduler:
     <<: *airflow-common
@@ -142,7 +145,8 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.13
 
   airflow-worker-1:
     <<: *airflow-common
@@ -167,7 +171,8 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.14
 
   airflow-worker-2:
     <<: *airflow-common
@@ -192,7 +197,8 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.15
 
   airflow-triggerer: 
     <<: *airflow-common
@@ -210,7 +216,8 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.16
 
   airflow-init:
     <<: *airflow-common
@@ -290,7 +297,8 @@ services:
     volumes:
       - .:/sources
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.17
 
   airflow-cli:
     <<: *airflow-common
@@ -307,7 +315,8 @@ services:
       - -c
       - airflow
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.18
 
   # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
   # or by explicitly targeted on the command line e.g. docker-compose up flower -d.
@@ -331,7 +340,8 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: 172.29.0.19
 
 networks:
   shared-network:
