@@ -60,8 +60,8 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
-    AIRFLOW__LOGGING__CELERY_LOGGING_LEVEL: 'ERROR'
-    AIRFLOW__LOGGING__LOGGING_LEVEL: 'ERROR'
+    AIRFLOW__LOGGING__CELERY_LOGGING_LEVEL: 'INFO'
+    AIRFLOW__LOGGING__LOGGING_LEVEL: 'INFO'
   volumes:
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/dags:/opt/airflow/dags
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/logs:/opt/airflow/logs
