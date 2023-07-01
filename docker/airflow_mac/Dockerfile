@@ -8,7 +8,6 @@ RUN apt-get -y install locales-all && apt-get -y install locales
 RUN apt-get install -y default-jdk
 
 # Add user
-USER root
 ARG USERNAME=kamiken
 ARG GROUPNAME=kamiken
 ARG UID=5986
@@ -37,12 +36,9 @@ RUN chmod 755 /home/kamiken/.ssh
 RUN chmod 755 /home/kamiken/.ssh/authorized_keys
 
 USER airflow
-RUN pip install lxml
-RUN pip install apache-airflow-providers-docker
-RUN pip install apache-airflow-providers-apache-cassandra
-RUN pip install apache-airflow-providers-apache-spark
-RUN pip install apache-airflow-providers-apache-hive
-RUN pip install apache-airflow-providers-mysql
-RUN pip install apache-airflow-providers-trino
-RUN pip install apache-airflow-providers-mongo
-RUN pip install airflow-provider-kafka
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --upgrade setuptools
+RUN pip install -r requirements.txt
+
+WORKDIR /opt/airflow/

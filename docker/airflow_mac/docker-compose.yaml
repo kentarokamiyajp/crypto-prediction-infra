@@ -64,6 +64,7 @@ x-airflow-common:
     AIRFLOW__LOGGING__LOGGING_LEVEL: 'INFO'
   volumes:
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/dags:/opt/airflow/dags
+    - /Volumes/kamiyaSSDX5/DockerVolume/airflow/dwh_script:/opt/airflow/dags/dwh_script
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/logs:/opt/airflow/logs
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/plugins:/opt/airflow/plugins
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/data:/opt/airflow/data
