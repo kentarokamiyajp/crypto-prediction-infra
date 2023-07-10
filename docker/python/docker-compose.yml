@@ -8,9 +8,9 @@ services:
     privileged: true
     volumes:
       - /Volumes/kamiyaSSDX5/DockerVolume/python/git:/home/kamiken/git
-      - /Volumes/kamiyaSSDX5/DockerVolume/python/polo-sdk-python:/home/kamiken/polo_sdk
       - /Volumes/kamiyaSSDX5/DockerVolume/kafka:/home/kamiken/kafka
       - /Volumes/kamiyaSSDX5/DockerVolume/spark:/home/kamiken/spark
+      - /Volumes/kamiyaSSDX5/DockerVolume/python_packages/polo-sdk-python:/home/polo_sdk
     networks:
       shared-network:
         ipv4_address: 172.29.0.9

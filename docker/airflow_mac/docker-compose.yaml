@@ -64,9 +64,11 @@ x-airflow-common:
     AIRFLOW__LOGGING__LOGGING_LEVEL: 'INFO'
   volumes:
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/dags:/opt/airflow/dags
+    - /Volumes/kamiyaSSDX5/DockerVolume/airflow/dwh_script:/opt/airflow/dags/dwh_script
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/logs:/opt/airflow/logs
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/plugins:/opt/airflow/plugins
     - /Volumes/kamiyaSSDX5/DockerVolume/airflow/data:/opt/airflow/data
+    - /Volumes/kamiyaSSDX5/DockerVolume/python_packages/polo-sdk-python:/home/polo_sdk
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
