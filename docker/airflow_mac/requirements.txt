@@ -30,3 +30,4 @@ zope.event==5.0
 zope.interface==6.0
 yahoofinancials==1.15
 yfinance==0.2.22
+python-dotenv==1.0.0

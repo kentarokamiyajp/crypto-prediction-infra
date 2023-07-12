@@ -31,8 +31,8 @@ services:
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
-      - /Volumes/kamiyaSSDX5/DockerVolume/kafka/data:/var/lib/kafka/data
-      - /Volumes/kamiyaSSDX5/DockerVolume/kafka:/var/lib/kafka
+      - /Volumes/SSDX5/DockerVolume/kafka/data:/var/lib/kafka/data
+      - /Volumes/SSDX5/DockerVolume/kafka:/var/lib/kafka
     depends_on:
       - zookeeper
     networks:
