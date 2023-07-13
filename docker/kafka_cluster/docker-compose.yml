@@ -47,8 +47,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       ZOOKEEPER: 2181
     volumes:
-      - /Volumes/kamiyaSSDX5/DockerVolume/kafka_broker_1/data:/var/lib/kafka/data
-      - /Volumes/kamiyaSSDX5/DockerVolume/kafka_broker_1:/var/lib/kafka
+      - /Volumes/SSDX5/DockerVolume/kafka_broker_1/data:/var/lib/kafka/data
+      - /Volumes/SSDX5/DockerVolume/kafka_broker_1:/var/lib/kafka
     depends_on:
       - zookeeper
     networks:
@@ -79,8 +79,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       ZOOKEEPER: 2181
     volumes:
-      - /Volumes/kamiyaSSDX5/DockerVolume/kafka_broker_2/data:/var/lib/kafka/data
-      - /Volumes/kamiyaSSDX5/DockerVolume/kafka_broker_2:/var/lib/kafka
+      - /Volumes/SSDX5/DockerVolume/kafka_broker_2/data:/var/lib/kafka/data
+      - /Volumes/SSDX5/DockerVolume/kafka_broker_2:/var/lib/kafka
     depends_on:
       - zookeeper
     networks:
@@ -111,8 +111,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       ZOOKEEPER: 2181
     volumes:
-      - /Volumes/kamiyaSSDX5/DockerVolume/kafka_broker_3/data:/var/lib/kafka/data
-      - /Volumes/kamiyaSSDX5/DockerVolume/kafka_broker_3:/var/lib/kafka
+      - /Volumes/SSDX5/DockerVolume/kafka_broker_3/data:/var/lib/kafka/data
+      - /Volumes/SSDX5/DockerVolume/kafka_broker_3:/var/lib/kafka
     depends_on:
       - zookeeper
     networks:

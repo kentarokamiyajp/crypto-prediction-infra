@@ -6,7 +6,7 @@ services:
       - "13306:3306" #ホストの13306番ポートとコンテナの3306番ポートをマッピング
     volumes:
       #- ./mysql/db:/docker-entrypoint-initdb.d #初期データをマウントする場所
-      - /Volumes/kamiyaSSDX5/DockerVolume/mysql_1:/var/lib/mysql
+      - /Volumes/SSDX5/DockerVolume/mysql_1:/var/lib/mysql
     image: mysql:8.0.31 #イメージ名
     environment:
       MYSQL_DATABASE: yelp
