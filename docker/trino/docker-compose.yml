@@ -9,13 +9,11 @@ services:
       - '22022:22'
     volumes:
       - /home/kentaro/Documents/DockerVolume/trino/etc:/etc/trino
-      - /home/kentaro/Documents/git/crypto_prediction_devops/docker/hadoop_docker/conf:/etc/hadoop
+      - /home/kentaro/Documents/git/crypto_prediction_devops/docker/hadoop/conf:/etc/hadoop
     networks:
-      - trino-network
-      - shared-network
+      shared-network:
+        ipv4_address: 172.30.0.2
 
 networks:
-  trino-network:
-    driver: bridge
   shared-network:
     external: true

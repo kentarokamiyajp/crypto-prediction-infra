@@ -25,6 +25,7 @@ services:
         ipv4_address: 172.29.0.20
 
   kafka1:
+    container_name: kafka1
     build:
       dockerfile: Dockerfile
     hostname: kafka1
@@ -57,6 +58,7 @@ services:
         ipv4_address: 172.29.0.21
 
   kafka2:
+    container_name: kafka2
     build:
       dockerfile: Dockerfile
     hostname: kafka2
@@ -89,6 +91,7 @@ services:
         ipv4_address: 172.29.0.22
 
   kafka3:
+    container_name: kafka3
     build:
       dockerfile: Dockerfile
     hostname: kafka3
@@ -132,6 +135,7 @@ services:
       shared-network:
         ipv4_address: 172.29.0.24
   kafdrop-cluster:
+    container_name: kafdrop-cluster
     image: obsidiandynamics/kafdrop:latest
     restart: "no"
     ports:
