@@ -13,3 +13,4 @@ urllib3==1.26.14
 websockets==11.0.3
 yahoofinancials==1.15
 yfinance==0.2.22
+pandas-market-calendars=4.1.4

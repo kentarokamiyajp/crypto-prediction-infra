@@ -29,3 +29,4 @@ websockets==11.0.3
 zope.event==5.0
 zope.interface==6.0
 python-dotenv==1.0.0
+pandas-market-calendars=4.1.4
