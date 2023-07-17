@@ -4,6 +4,7 @@ services:
     build:
       dockerfile: Dockerfile
     hostname: trino
+    container_name: trino
     ports:
       - '8881:8080'
       - '22022:22'
