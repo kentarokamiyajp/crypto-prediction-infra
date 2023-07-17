@@ -21,7 +21,7 @@ services:
         image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
         container_name: datanode
         restart: always
-        depends_on: 
+        depends_on:
             - namenode
         volumes:
             - /home/kentaro/Documents/DockerVolume/hadoop/hadoop_datanode:/hadoop/dfs/data
@@ -48,7 +48,7 @@ services:
         networks:
             shared-network:
                 ipv4_address: 172.30.0.5
-    
+
     nodemanager:
         image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
         container_name: nodemanager
@@ -62,7 +62,7 @@ services:
         networks:
             shared-network:
                 ipv4_address: 172.30.0.6
-    
+
     historyserver:
         image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
         container_name: historyserver
@@ -78,12 +78,12 @@ services:
         networks:
             shared-network:
                 ipv4_address: 172.30.0.7
-    
+
     hive-server:
         image: bde2020/hive:2.3.2-postgresql-metastore
         container_name: hive-server
         restart: always
-        depends_on: 
+        depends_on:
             - namenode
             - datanode
         environment:
@@ -96,7 +96,7 @@ services:
         networks:
             shared-network:
                 ipv4_address: 172.30.0.8
-    
+
     hive-metastore:
         image: bde2020/hive:2.3.2-postgresql-metastore
         container_name: hive-metastore
@@ -111,7 +111,7 @@ services:
         networks:
             shared-network:
                 ipv4_address: 172.30.0.9
-    
+
     hive-metastore-postgresql:
         image: bde2020/hive-metastore-postgresql:2.3.0
         container_name: hive-metastore-postgresql
@@ -120,7 +120,7 @@ services:
         networks:
             shared-network:
                 ipv4_address: 172.30.0.10
-        
+
     spark-master:
         image: bambrow/spark-master:3.1.1-hadoop3.2
         container_name: spark-master
@@ -153,11 +153,11 @@ services:
         networks:
             shared-network:
                 ipv4_address: 172.30.0.12
-    
+
     spark-history-server:
         image: bambrow/spark-history-server:3.1.1-hadoop3.2
         container_name: spark-history-server
-        depends_on: 
+        depends_on:
             - spark-master
         ports:
             - 18080:18080
