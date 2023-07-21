@@ -14,9 +14,9 @@ RUN make
 RUN make install
 
 # Add user
-ARG USERNAME=kamiken
-ARG GROUPNAME=kamiken
-ARG PASSWORD=kamiken
+ARG USERNAME=pyuser
+ARG GROUPNAME=pyuser
+ARG PASSWORD=pyuser
 ARG UID=1001
 ARG GID=1001
 RUN groupadd -g $GID $GROUPNAME && \

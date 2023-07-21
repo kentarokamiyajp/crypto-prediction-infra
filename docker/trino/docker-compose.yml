@@ -9,8 +9,8 @@ services:
       - '8881:8080'
       - '22022:22'
     volumes:
-      - /home/kentaro/Documents/DockerVolume/trino/etc:/etc/trino
-      - /home/kentaro/Documents/git/crypto_prediction_devops/docker/hadoop/conf:/etc/hadoop
+      - ${TRINO_VOLUME_HOME}/trino/etc:/etc/trino
+      - ${HADOOP_CONF}:/etc/hadoop
     networks:
       shared-network:
         ipv4_address: 172.30.0.2

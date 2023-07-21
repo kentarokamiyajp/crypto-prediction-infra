@@ -5,7 +5,7 @@ services:
         container_name: namenode
         restart: always
         volumes:
-            - /home/kentaro/Documents/DockerVolume/hadoop/hadoop_namenode:/hadoop/dfs/name
+            - ${HODOOP_VOLUME_HOME}/hadoop_namenode:/hadoop/dfs/name
         environment:
             - CLUSTER_NAME=test
         ports:
@@ -24,7 +24,7 @@ services:
         depends_on:
             - namenode
         volumes:
-            - /home/kentaro/Documents/DockerVolume/hadoop/hadoop_datanode:/hadoop/dfs/data
+            - ${HODOOP_VOLUME_HOME}/hadoop_datanode:/hadoop/dfs/data
         environment:
             SERVICE_PRECONDITION: "namenode:9870"
         ports:
@@ -70,7 +70,7 @@ services:
         environment:
             SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
         volumes:
-            - /home/kentaro/Documents/DockerVolume/hadoop/hadoop_historyserver:/hadoop/yarn/timeline
+            - ${HODOOP_VOLUME_HOME}/hadoop_historyserver:/hadoop/yarn/timeline
         ports:
             - 8188:8188
         env_file:
@@ -116,7 +116,7 @@ services:
         image: bde2020/hive-metastore-postgresql:2.3.0
         container_name: hive-metastore-postgresql
         volumes:
-            - /home/kentaro/Documents/DockerVolume/hadoop/hive_metastore:/var/lib/postgresql/data
+            - ${HODOOP_VOLUME_HOME}/hive_metastore:/var/lib/postgresql/data
         networks:
             shared-network:
                 ipv4_address: 172.30.0.10

@@ -5,9 +5,9 @@ RUN apt-get update
 RUN apt-get -y install locales-all && apt-get -y install locales nano vim less sudo default-jdk
 
 # Add user
-ARG USERNAME=kamiken
-ARG GROUPNAME=kamiken
-ARG PASSWORD=kamiken
+ARG USERNAME=air
+ARG GROUPNAME=air
+ARG PASSWORD=air
 ARG UID=1001
 ARG GID=1001
 RUN groupadd -g $GID $GROUPNAME && \

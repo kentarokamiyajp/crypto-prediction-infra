@@ -60,13 +60,15 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
-    AIRFLOW__LOGGING__CELERY_LOGGING_LEVEL: 'ERROR'
-    AIRFLOW__LOGGING__LOGGING_LEVEL: 'ERROR'
+    AIRFLOW__LOGGING__CELERY_LOGGING_LEVEL: 'INFO'
+    AIRFLOW__LOGGING__LOGGING_LEVEL: 'INFO'
   volumes:
-    - /home/kentaro/Documents/DockerVolume/airflow/dags:/opt/airflow/dags
-    - /home/kentaro/Documents/DockerVolume/airflow/logs:/opt/airflow/logs
-    - /home/kentaro/Documents/DockerVolume/airflow/plugins:/opt/airflow/plugins
-    - /home/kentaro/Documents/DockerVolume/airflow/data:/opt/airflow/data
+    - ${DOCKER_VOLUME_HOME}/git:/opt/airflow/git
+    - ${AIRLFOW_DAGS_HOME}:/opt/airflow/dags
+    - ${AIRFLOW_VOLUME_HOME}/logs:/opt/airflow/logs
+    - ${AIRFLOW_VOLUME_HOME}/plugins:/opt/airflow/plugins
+    - ${AIRFLOW_VOLUME_HOME}/data:/opt/airflow/data
+    - ${POLONIEX_SDK_HOME}:/home/polo_sdk
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -77,13 +79,14 @@ x-airflow-common:
 
 services:
   postgres:
+    container_name: airflow-postgres
     image: postgres:13
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
-      - /home/kentaro/Documents/DockerVolume/airflow/postgresql/data:/var/lib/postgresql/data
+      - ${AIRFLOW_VOLUME_HOME}/postgresql/data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "airflow" ]
       interval: 5s
@@ -94,9 +97,10 @@ services:
         ipv4_address: 172.29.0.10
 
   redis:
+    container_name: airflow-redis
     image: redis:latest
     volumes:
-      - /home/kentaro/Documents/DockerVolume/airflow/redis/data:/data
+      - ${AIRFLOW_VOLUME_HOME}/redis/data:/data
     expose:
       - 6379
     healthcheck:
@@ -111,6 +115,7 @@ services:
 
   airflow-webserver:
     <<: *airflow-common
+    container_name: airflow-webserver
     command: webserver
     ports:
       - '8880:8080'
@@ -137,6 +142,7 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
+    container_name: airflow-scheduler
     command: scheduler
     ports:
       - '24022:22'
@@ -160,6 +166,7 @@ services:
 
   airflow-worker-1:
     <<: *airflow-common
+    container_name: airflow-worker-1
     command: celery worker
     ports:
       - '25022:22'
@@ -186,6 +193,7 @@ services:
 
   airflow-worker-2:
     <<: *airflow-common
+    container_name: airflow-worker-2
     command: celery worker -q high_cpu
     ports:
       - '26022:22'
@@ -212,6 +220,7 @@ services:
 
   airflow-triggerer:
     <<: *airflow-common
+    container_name: airflow-triggerer
     command: triggerer
     ports:
       - '27022:22'
@@ -316,6 +325,7 @@ services:
 
   airflow-cli:
     <<: *airflow-common
+    container_name: airflow-cli
     ports:
       - '28022:22'
     profiles:
@@ -337,6 +347,7 @@ services:
   # See: https://docs.docker.com/compose/profiles/
   flower:
     <<: *airflow-common
+    container_name: airflow-flower
     command: celery flower
     profiles:
       - flower

@@ -1,0 +1,13 @@
+docker/airflow_mac/authorized_keys
+docker/airflow_mac/.env
+docker/airflow_ubuntu/authorized_keys
+docker/airflow_ubuntu/.env
+docker/kafka/authorized_keys
+docker/kafka/.env
+docker/python/authorized_keys
+docker/python/.env
+docker/trino/authorized_keys
+docker/trino/.env
+docker/cassandra/.env
+docker/hadoop/.env
+docker/mysql/.env

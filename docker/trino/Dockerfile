@@ -5,9 +5,9 @@ RUN apt-get update
 RUN apt-get install -y locales-all && apt-get install -y locales nano vim less sudo
 
 # Add user
-ARG USERNAME=kamiken
-ARG GROUPNAME=kamiken
-ARG PASSWORD=kamiken
+ARG USERNAME=triner
+ARG GROUPNAME=triner
+ARG PASSWORD=triner
 ARG UID=1001
 ARG GID=1001
 RUN groupadd -g $GID $GROUPNAME && \

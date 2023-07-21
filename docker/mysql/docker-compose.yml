@@ -6,14 +6,14 @@ services:
       - "13306:3306" #ホストの13306番ポートとコンテナの3306番ポートをマッピング
     volumes:
       #- ./mysql/db:/docker-entrypoint-initdb.d #初期データをマウントする場所
-      - /Volumes/SSDX5/DockerVolume/mysql_1:/var/lib/mysql
+      - ${MYSQL_HOME}:/var/lib/mysql
     image: mysql:8.0.31 #イメージ名
     environment:
-      MYSQL_DATABASE: yelp
-      MYSQL_USER: kamiken_docker
-      MYSQL_PASSWORD: kamiken
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_TCP_PORT: 3306
+      MYSQL_DATABASE: crypto
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_TCP_PORT: ${MYSQL_TCP_PORT}
     networks:
       - shared-network
 networks:
