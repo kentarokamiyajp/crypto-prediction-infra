@@ -14,15 +14,15 @@ RUN make
 RUN make install
 
 # Add user
-ARG USERNAME=kamiken
-ARG GROUPNAME=kamiken
-ARG PASSWORD=kamiken
+ARG USERNAME=pyuser
+ARG GROUPNAME=pyuser
+ARG PASSWORD=pyuser
 ARG UID=1001
 ARG GID=1001
 RUN groupadd -g $GID $GROUPNAME && \
-    useradd -m -s /bin/bash -u $UID -g $GID -G sudo $USERNAME && \
-    echo $USERNAME:$PASSWORD | chpasswd && \
-    echo "$USERNAME   ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+  useradd -m -s /bin/bash -u $UID -g $GID -G sudo $USERNAME && \
+  echo $USERNAME:$PASSWORD | chpasswd && \
+  echo "$USERNAME   ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Install SSH server
 RUN apt-get update

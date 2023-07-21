@@ -63,12 +63,12 @@ x-airflow-common:
     AIRFLOW__LOGGING__CELERY_LOGGING_LEVEL: 'INFO'
     AIRFLOW__LOGGING__LOGGING_LEVEL: 'INFO'
   volumes:
-    - /Volumes/SSDX5/DockerVolume/git:/opt/airflow/git
-    - /Volumes/SSDX5/DockerVolume/git/crypto_prediction_dwh/script/airflow/dags:/opt/airflow/dags
-    - /Volumes/SSDX5/DockerVolume/airflow/logs:/opt/airflow/logs
-    - /Volumes/SSDX5/DockerVolume/airflow/plugins:/opt/airflow/plugins
-    - /Volumes/SSDX5/DockerVolume/airflow/data:/opt/airflow/data
-    - /Volumes/SSDX5/DockerVolume/python_packages/polo-sdk-python:/home/polo_sdk
+    - ${DOCKER_VOLUME_HOME}/git:/opt/airflow/git
+    - ${AIRLFOW_DAGS_HOME}:/opt/airflow/dags
+    - ${AIRFLOW_VOLUME_HOME}/logs:/opt/airflow/logs
+    - ${AIRFLOW_VOLUME_HOME}/plugins:/opt/airflow/plugins
+    - ${AIRFLOW_VOLUME_HOME}/data:/opt/airflow/data
+    - ${POLONIEX_SDK_HOME}:/home/polo_sdk
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -86,7 +86,7 @@ services:
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
-      - /Volumes/SSDX5/DockerVolume/airflow/postgresql/data:/var/lib/postgresql/data
+      - ${AIRFLOW_VOLUME_HOME}/postgresql/data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "airflow" ]
       interval: 5s
@@ -100,7 +100,7 @@ services:
     container_name: airflow-redis
     image: redis:latest
     volumes:
-      - /Volumes/SSDX5/DockerVolume/airflow/redis/data:/data
+      - ${AIRFLOW_VOLUME_HOME}/redis/data:/data
     expose:
       - 6379
     healthcheck:

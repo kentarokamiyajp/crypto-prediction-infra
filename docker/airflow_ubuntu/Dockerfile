@@ -20,11 +20,11 @@ RUN apt-get install -y openjdk-11-jdk
 
 # Add user
 USER root
-ARG USERNAME=kamiken
-ARG GROUPNAME=kamiken
+ARG USERNAME=air
+ARG GROUPNAME=air
 ARG UID=5986
 ARG GID=5986
-ARG PASSWORD=kamiken
+ARG PASSWORD=air
 RUN groupadd -g $GID $GROUPNAME && \
     useradd -m -s /bin/bash -u $UID -g $GID -G sudo $USERNAME && \
     echo $USERNAME:$PASSWORD | chpasswd && \
@@ -42,10 +42,10 @@ EXPOSE 22
 
 WORKDIR /home/$USERNAME/
 
-RUN mkdir /home/kamiken/.ssh/
-COPY authorized_keys /home/kamiken/.ssh/
-RUN chmod 755 /home/kamiken/.ssh
-RUN chmod 755 /home/kamiken/.ssh/authorized_keys
+RUN mkdir /home/$USERNAME/.ssh/
+COPY authorized_keys /home/$USERNAME/.ssh/
+RUN chmod 755 /home/$USERNAME/.ssh
+RUN chmod 755 /home/$USERNAME/.ssh/authorized_keys
 
 USER airflow
 RUN pip install lxml

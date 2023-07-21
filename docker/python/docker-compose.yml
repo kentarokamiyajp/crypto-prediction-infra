@@ -7,10 +7,10 @@ services:
     tty: true
     privileged: true
     volumes:
-      - /Volumes/SSDX5/DockerVolume/git:/home/kamiken/git
-      - /Volumes/SSDX5/DockerVolume/kafka:/home/kamiken/kafka
-      - /Volumes/SSDX5/DockerVolume/spark:/home/kamiken/spark
-      - /Volumes/SSDX5/DockerVolume/python_packages/polo-sdk-python:/home/polo_sdk
+      - ${PYTHON_VOLUME_HOME}/git:/home/${PYUSER}/git
+      - ${PYTHON_VOLUME_HOME}/kafka:/home/${PYUSER}/kafka
+      - ${PYTHON_VOLUME_HOME}/spark:/home/${PYUSER}/spark
+      - ${PYTHON_VOLUME_HOME}/python_packages/polo-sdk-python:/home/polo_sdk
     networks:
       shared-network:
         ipv4_address: 172.29.0.9
