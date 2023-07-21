@@ -1,6 +1,5 @@
 #!/bin/bash
-if [ -d "/home/pyuser/.pyenv" ];
-then
+if [ -d "/home/pyuser/.pyenv" ]; then
     echo "pyenv already exists"
 else
     cd /home/pyuser || exit
@@ -24,6 +23,6 @@ else
     pip install -r /home/pyuser/src/requirements.txt
     python3.10 -m pip install --upgrade pip
 
-    cat /home/pyuser/init_bashrc >> /home/pyuser/.bashrc
+    cat /home/pyuser/init_bashrc >>/home/pyuser/.bashrc
 
 fi
