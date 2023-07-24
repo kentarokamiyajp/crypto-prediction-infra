@@ -1,11 +1,13 @@
 version: "3"
 services:
     namenode:
-        image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+        image: hadoop-namenode:latest
         container_name: namenode
         restart: always
         volumes:
             - ${HODOOP_VOLUME_HOME}/hadoop_namenode:/hadoop/dfs/name
+            - ${REPOSITORY_HOME}:/home/hadoop/git
+            - ${EXTERNAL_DATA}:/home/hadoop/ext_dataset
         environment:
             - CLUSTER_NAME=test
         ports:
