@@ -1,7 +1,8 @@
 version: "3"
 services:
     namenode:
-        image: hadoop-namenode:latest
+        build:
+            dockerfile: Dockerfile_namenode
         container_name: namenode
         restart: always
         volumes:

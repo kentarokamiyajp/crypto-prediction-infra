@@ -10,4 +10,5 @@ docker/trino/authorized_keys
 docker/trino/.env
 docker/cassandra/.env
 docker/hadoop/.env
+docker/hadoop/authorized_keys
 docker/mysql/.env
