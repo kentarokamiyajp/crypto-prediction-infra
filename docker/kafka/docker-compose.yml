@@ -51,7 +51,7 @@ services:
       - ${KAFKA1_HOME}/data:/var/lib/kafka/data
       - ${KAFKA1_HOME}:/var/lib/kafka
     depends_on:
-      - zookeeper
+      - kafka-zookeeper
     networks:
       kafka-network:
       shared-network:
@@ -84,7 +84,7 @@ services:
       - ${KAFKA2_HOME}/data:/var/lib/kafka/data
       - ${KAFKA2_HOME}:/var/lib/kafka
     depends_on:
-      - zookeeper
+      - kafka-zookeeper
     networks:
       kafka-network:
       shared-network:
@@ -117,7 +117,7 @@ services:
       - ${KAFKA3_HOME}/data:/var/lib/kafka/data
       - ${KAFKA3_HOME}:/var/lib/kafka
     depends_on:
-      - zookeeper
+      - kafka-zookeeper
     networks:
       kafka-network:
       shared-network:
