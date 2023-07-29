@@ -1,8 +1,12 @@
-# Troubleshooting
+# Infromation
 
-## apt install <package> Error
+## Reference
+- https://github.com/bambrow/docker-hadoop-workbench
+## Troubleshooting
 
-### Error sample
+### apt install <package> Error
+
+#### Error sample
 
 ```[bash]
 root@ed2ff08c7b6b:/# apt install lsb-release
@@ -12,7 +16,7 @@ Reading state information... Done
 E: Unable to locate package lsb-release
 ```
 
-### How to fix
+#### How to fix
 
 1. Check the following file.
 ```
