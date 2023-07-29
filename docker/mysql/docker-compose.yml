@@ -19,7 +19,7 @@ services:
     restart: always
     networks:
       shared-network:
-        ipv4_address: 172.30.0.14
+        ipv4_address: ${MYSQL_HOST}
 
 networks:
   shared-network:

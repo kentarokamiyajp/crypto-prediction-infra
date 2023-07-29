@@ -12,3 +12,4 @@ docker/cassandra/.env
 docker/hadoop/.env
 docker/hadoop/authorized_keys
 docker/mysql/.env
+docker/hive_client/.env

@@ -19,7 +19,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.3
+                ipv4_address: ${NAMENODE_HOST}
 
     datanode:
         image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
@@ -38,7 +38,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.4
+                ipv4_address: ${DATANODE_HOST}
 
     resourcemanager:
         image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
@@ -52,7 +52,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.5
+                ipv4_address: ${RESOURCE_MANAGER_HOST}
 
     nodemanager:
         image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
@@ -66,7 +66,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.6
+                ipv4_address: ${NODE_MANAGER_HOST}
 
     historyserver:
         image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
@@ -82,7 +82,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.7
+                ipv4_address: ${HISTORY_SERVER_HOST}
 
     hive-server:
         image: bde2020/hive:2.3.2-postgresql-metastore
@@ -100,7 +100,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.8
+                ipv4_address: ${HIVE_SERVER_HOST}
 
     hive-metastore:
         image: bde2020/hive:2.3.2-postgresql-metastore
@@ -115,7 +115,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.9
+                ipv4_address: ${HIVE_METASTORE_HOST}
 
     hive-metastore-postgresql:
         image: bde2020/hive-metastore-postgresql:2.3.0
@@ -124,7 +124,7 @@ services:
             - ${HODOOP_VOLUME_HOME}/hive_metastore:/var/lib/postgresql/data
         networks:
             shared-network:
-                ipv4_address: 172.30.0.10
+                ipv4_address: ${HIVE_METASTORE_POSTGRESQL_HOST}
 
     spark-master:
         image: bambrow/spark-master:3.1.1-hadoop3.2
@@ -142,7 +142,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.11
+                ipv4_address: ${SPARK_MASTER_HOST}
 
     spark-worker:
         image: bde2020/spark-worker:3.1.1-hadoop3.2
@@ -157,7 +157,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.12
+                ipv4_address: ${SPARK_WORKER_HOST}
 
     spark-history-server:
         image: bambrow/spark-history-server:3.1.1-hadoop3.2
@@ -170,7 +170,7 @@ services:
             - ./hadoop.env
         networks:
             shared-network:
-                ipv4_address: 172.30.0.13
+                ipv4_address: ${SPARK_HISTORY_SERVER_HOST}
 
 networks:
     shared-network:
