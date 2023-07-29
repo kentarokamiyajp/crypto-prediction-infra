@@ -13,7 +13,7 @@ services:
       - ${HADOOP_CONF}:/etc/hadoop
     networks:
       shared-network:
-        ipv4_address: 172.30.0.2
+        ipv4_address: ${TRINO_HOST}
 
 networks:
   shared-network:

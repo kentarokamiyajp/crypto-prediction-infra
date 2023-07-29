@@ -1,0 +1,44 @@
+FROM bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+USER root
+
+# Update sources.list to avoid apt install error.
+RUN rm /etc/apt/sources.list
+COPY sources.list /etc/apt/sources.list
+RUN chmod 644 /etc/apt/sources.list
+
+RUN apt-get update
+RUN apt-get -y install locales-all && apt-get -y install locales nano vim less sudo
+
+# Add user
+ARG USERNAME=hadoop
+ARG GROUPNAME=hadoop
+ARG PASSWORD=hadoop
+ARG UID=1001
+ARG GID=1001
+RUN groupadd -g $GID $GROUPNAME && \
+    useradd -m -s /bin/bash -u $UID -g $GID -G sudo $USERNAME && \
+    echo $USERNAME:$PASSWORD | chpasswd && \
+    echo "$USERNAME   ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    usermod -a -G root $USERNAME
+
+# Install SSH server
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends openssh-server
+RUN rm -rf /var/lib/apt/lists/*
+RUN sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/" /etc/ssh/sshd_config
+RUN ssh-keygen -A
+RUN service ssh start
+RUN echo "service ssh status || service ssh start" >> ~/.bashrc
+
+USER $USERNAME
+RUN mkdir /home/$USERNAME/.ssh
+COPY authorized_keys /home/$USERNAME/.ssh/
+RUN sudo chmod 700 /home/$USERNAME/.ssh
+RUN sudo chmod 644 /home/$USERNAME/.ssh/authorized_keys
+RUN echo "sudo service ssh status || sudo service ssh start" >> ~/.bashrc
+RUN echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/; export JAVA_HOME" >> ~/.bashrc
+RUN echo "HADOOP_HOME=/opt/hadoop-3.2.1; export HADOOP_HOME" >> ~/.bashrc
+RUN echo "PATH=/opt/hadoop-3.2.1/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin; export PATH" >> ~/.bashrc
+
+USER root
+EXPOSE 22

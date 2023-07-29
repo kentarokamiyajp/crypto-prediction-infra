@@ -10,7 +10,7 @@ docker-compose -f ${SCRIPT_PATH}/${DOCKER_COMPOSE_FILE} down
 docker-compose -f ${SCRIPT_PATH}/${DOCKER_COMPOSE_FILE} pull
 sleep 5
 
-docker-compose -f ${SCRIPT_PATH}/${DOCKER_COMPOSE_FILE} up -d namenode datanode resourcemanager nodemanager historyserver
+docker-compose -f ${SCRIPT_PATH}/${DOCKER_COMPOSE_FILE} up -d --build namenode datanode resourcemanager nodemanager historyserver
 sleep 5
 docker-compose -f ${SCRIPT_PATH}/${DOCKER_COMPOSE_FILE} up -d hive-server hive-metastore hive-metastore-postgresql
 sleep 5

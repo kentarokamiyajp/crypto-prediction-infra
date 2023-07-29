@@ -1,21 +1,26 @@
 version: "3.9"
 services:
   mysql:
-    build: ./mysql/ #Dockerfileのパス
+    build:
+      dockerfile: Dockerfile
+    hostname: mysql
+    container_name: mysql
     ports:
-      - "13306:3306" #ホストの13306番ポートとコンテナの3306番ポートをマッピング
+      - "${MYSQL_PORT}:${MYSQL_TCP_PORT}"
     volumes:
-      #- ./mysql/db:/docker-entrypoint-initdb.d #初期データをマウントする場所
       - ${MYSQL_HOME}:/var/lib/mysql
-    image: mysql:8.0.31 #イメージ名
+    image: mysql:8.0.33.debian
     environment:
-      MYSQL_DATABASE: crypto
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_TCP_PORT: ${MYSQL_TCP_PORT}
+    restart: always
     networks:
-      - shared-network
+      shared-network:
+        ipv4_address: ${MYSQL_HOST}
+
 networks:
   shared-network:
     external: true

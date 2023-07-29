@@ -1,0 +1,24 @@
+version: "3"
+services:
+    hive-client:
+        build:
+            dockerfile: Dockerfile
+        image: hive-client
+        container_name: hive-client
+        environment:
+            HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://${METASTORE_HOST}/metastore"
+        ports:
+            - 11000:10000
+            - 11002:10002
+        env_file:
+            - ./hadoop.env
+        networks:
+            shared-network:
+                ipv4_address: ${HIVE_CLIENT_HOST}
+        volumes:
+            - ${REPOSITORY_HOME}:/home/git
+            - ${LOG_HOME}:/home/log
+
+networks:
+    shared-network:
+        external: true
