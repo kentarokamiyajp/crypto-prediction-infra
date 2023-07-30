@@ -63,7 +63,7 @@ x-airflow-common:
     AIRFLOW__LOGGING__CELERY_LOGGING_LEVEL: 'INFO'
     AIRFLOW__LOGGING__LOGGING_LEVEL: 'INFO'
   volumes:
-    - ${DOCKER_VOLUME_HOME}/git:/opt/airflow/git
+    - ${GIT_HOME}:/opt/airflow/git
     - ${AIRLFOW_DAGS_HOME}:/opt/airflow/dags
     - ${AIRFLOW_VOLUME_HOME}/logs:/opt/airflow/logs
     - ${AIRFLOW_VOLUME_HOME}/plugins:/opt/airflow/plugins
@@ -94,7 +94,7 @@ services:
     restart: always
     networks:
       shared-network:
-        ipv4_address: 172.29.0.10
+        ipv4_address: ${POSTGRES_HOST}
 
   redis:
     container_name: airflow-redis
@@ -111,7 +111,7 @@ services:
     restart: always
     networks:
       shared-network:
-        ipv4_address: 172.29.0.11
+        ipv4_address: ${REDIS_HOST}
 
   airflow-webserver:
     <<: *airflow-common
@@ -138,7 +138,7 @@ services:
         condition: service_completed_successfully
     networks:
       shared-network:
-        ipv4_address: 172.29.0.12
+        ipv4_address: ${WEBSERVER_HOST}
 
   airflow-scheduler:
     <<: *airflow-common
@@ -162,7 +162,7 @@ services:
         condition: service_completed_successfully
     networks:
       shared-network:
-        ipv4_address: 172.29.0.13
+        ipv4_address: ${SCHEDULER_HOST}
 
   airflow-worker-1:
     <<: *airflow-common
@@ -189,7 +189,7 @@ services:
         condition: service_completed_successfully
     networks:
       shared-network:
-        ipv4_address: 172.29.0.14
+        ipv4_address: ${WORKER1_HOST}
 
   airflow-worker-2:
     <<: *airflow-common
@@ -216,7 +216,7 @@ services:
         condition: service_completed_successfully
     networks:
       shared-network:
-        ipv4_address: 172.29.0.15
+        ipv4_address: ${WORKER2_HOST}
 
   airflow-triggerer:
     <<: *airflow-common
@@ -240,7 +240,7 @@ services:
         condition: service_completed_successfully
     networks:
       shared-network:
-        ipv4_address: 172.29.0.16
+        ipv4_address: ${TRIGGER_HOST}
 
   airflow-init:
     <<: *airflow-common
@@ -321,7 +321,7 @@ services:
       - .:/sources
     networks:
       shared-network:
-        ipv4_address: 172.29.0.17
+        ipv4_address: ${INIT_HOST}
 
   airflow-cli:
     <<: *airflow-common
@@ -340,7 +340,7 @@ services:
       - airflow
     networks:
       shared-network:
-        ipv4_address: 172.29.0.18
+        ipv4_address: ${AIRFLOW_CLI_HOST}
 
   # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
   # or by explicitly targeted on the command line e.g. docker-compose up flower -d.
@@ -366,7 +366,7 @@ services:
         condition: service_completed_successfully
     networks:
       shared-network:
-        ipv4_address: 172.29.0.19
+        ipv4_address: ${FLOWER_HOST}
 
 networks:
   shared-network:
