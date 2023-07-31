@@ -33,6 +33,11 @@ RUN sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/" /etc/ssh/
 RUN ssh-keygen -A
 RUN service ssh start
 
+RUN mkdir /home/airflow/.ssh
+RUN ssh-keygen -q -N "" -t rsa -f /home/airflow/.ssh/id_rsa
+RUN chmod 750 /home/airflow/.ssh
+RUN chmod 740 /home/airflow/.ssh/id_rsa
+
 USER airflow
 COPY requirements.txt .
 RUN pip install --upgrade pip
