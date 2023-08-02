@@ -1,7 +1,9 @@
 docker/airflow_mac/authorized_keys
 docker/airflow_mac/.env
-docker/airflow_ubuntu/authorized_keys
+docker/airflow_mac/.ssh
 docker/airflow_ubuntu/.env
+docker/airflow_ubuntu/authorized_keys
+docker/airflow_ubuntu/.ssh
 docker/kafka/authorized_keys
 docker/kafka/.env
 docker/python/authorized_keys
@@ -13,5 +15,3 @@ docker/hadoop/.env
 docker/hadoop/authorized_keys
 docker/mysql/.env
 docker/hive_client/.env
-docker/airflow_ubuntu/.env
-docker/airflow_ubuntu/authorized_keys
