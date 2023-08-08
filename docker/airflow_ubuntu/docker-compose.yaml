@@ -120,6 +120,7 @@ services:
     ports:
       - '8880:8080'
       - '23022:22'
+      - '8889:8888'
     healthcheck:
       test:
         [
