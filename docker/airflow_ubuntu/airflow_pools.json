@@ -10,5 +10,13 @@
     "yfinance_pool": {
         "description": "",
         "slots": 1
+    },
+    "pyspark_pool": {
+        "description": "",
+        "slots": 1
+    },
+    "trino_pool": {
+        "description": "",
+        "slots": 3
     }
 }
