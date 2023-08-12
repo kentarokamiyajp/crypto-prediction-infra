@@ -1,0 +1,14 @@
+{
+    "default_pool": {
+        "description": "Default pool",
+        "slots": 128
+    },
+    "poloniex_pool": {
+        "description": "",
+        "slots": 1
+    },
+    "yfinance_pool": {
+        "description": "",
+        "slots": 1
+    }
+}

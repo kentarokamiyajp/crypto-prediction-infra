@@ -9,7 +9,7 @@ services:
       - '8881:8080'
       - '22022:22'
     volumes:
-      - ${TRINO_VOLUME_HOME}/trino/etc:/etc/trino
+      - ${TRINO_CONF}/etc:/etc/trino
       - ${HADOOP_CONF}:/etc/hadoop
     networks:
       shared-network:

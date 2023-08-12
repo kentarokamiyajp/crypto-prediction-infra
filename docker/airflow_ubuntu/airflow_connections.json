@@ -1,0 +1,12 @@
+{
+    "spark_conn": {
+        "conn_type": "spark",
+        "description": "",
+        "login": "",
+        "password": null,
+        "host": "spark://192.168.10.14",
+        "port": 7077,
+        "schema": "",
+        "extra": ""
+    }
+}

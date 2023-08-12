@@ -16,3 +16,6 @@ yfinance==0.2.22
 pandas-market-calendars==3.4
 trino==0.326.0
 apache-airflow-providers-apache-spark==4.1.0
+stock-indicators==1.0.1
+scikit-learn==1.0.2
+lightgbm==4.0.0
