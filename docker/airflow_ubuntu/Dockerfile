@@ -51,7 +51,6 @@ RUN pip install -r requirements.txt
 
 # set pools
 COPY airflow_pools.json .
-RUN airflow pools import ./airflow_pools.json
 
 USER $USERNAME
 WORKDIR /home/$USERNAME

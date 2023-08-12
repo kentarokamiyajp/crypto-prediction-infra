@@ -46,7 +46,6 @@ RUN echo "PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin" >> ~/.bashrc
 
 # set pools
 COPY airflow_pools.json .
-RUN airflow pools import ./airflow_pools.json
 
 USER $USERNAME
 WORKDIR /home/$USERNAME
