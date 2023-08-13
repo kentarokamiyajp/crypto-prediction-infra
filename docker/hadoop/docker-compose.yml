@@ -186,10 +186,6 @@ services:
         build:
             dockerfile: Dockerfile_spark_base
         container_name: spark-worker-1
-        ports:
-        - 8081:8081
-        - 9091:8080
-        - 7000:7000
         env_file:
             - ./hadoop.env
         depends_on:
@@ -210,10 +206,6 @@ services:
         build:
             dockerfile: Dockerfile_spark_base
         container_name: spark-worker-2
-        ports:
-        - 8082:8081
-        - 9092:8080
-        - 7001:7000
         env_file:
             - ./hadoop.env
         depends_on:
@@ -229,6 +221,66 @@ services:
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER2_HOST}
+
+    spark-worker-3:
+        build:
+            dockerfile: Dockerfile_spark_base
+        container_name: spark-worker-3
+        env_file:
+            - ./hadoop.env
+        depends_on:
+        - spark-master
+        environment:
+        - SPARK_MASTER=spark://spark-master:7077
+        - SPARK_WORKER_CORES=2
+        - SPARK_WORKER_MEMORY=10G
+        - SPARK_DRIVER_MEMORY=10G
+        - SPARK_EXECUTOR_MEMORY=10G
+        - SPARK_WORKLOAD=worker
+        - SPARK_LOCAL_IP=spark-worker-3
+        networks:
+            shared-network:
+                ipv4_address: ${SPARK_WORKER3_HOST}
+
+    spark-worker-4:
+        build:
+            dockerfile: Dockerfile_spark_base
+        container_name: spark-worker-4
+        env_file:
+            - ./hadoop.env
+        depends_on:
+        - spark-master
+        environment:
+        - SPARK_MASTER=spark://spark-master:7077
+        - SPARK_WORKER_CORES=2
+        - SPARK_WORKER_MEMORY=10G
+        - SPARK_DRIVER_MEMORY=10G
+        - SPARK_EXECUTOR_MEMORY=10G
+        - SPARK_WORKLOAD=worker
+        - SPARK_LOCAL_IP=spark-worker-4
+        networks:
+            shared-network:
+                ipv4_address: ${SPARK_WORKER4_HOST}
+
+    spark-worker-5:
+        build:
+            dockerfile: Dockerfile_spark_base
+        container_name: spark-worker-5
+        env_file:
+            - ./hadoop.env
+        depends_on:
+        - spark-master
+        environment:
+        - SPARK_MASTER=spark://spark-master:7077
+        - SPARK_WORKER_CORES=2
+        - SPARK_WORKER_MEMORY=10G
+        - SPARK_DRIVER_MEMORY=10G
+        - SPARK_EXECUTOR_MEMORY=10G
+        - SPARK_WORKLOAD=worker
+        - SPARK_LOCAL_IP=spark-worker-5
+        networks:
+            shared-network:
+                ipv4_address: ${SPARK_WORKER5_HOST}
 
     spark-history-server:
         image: bambrow/spark-history-server:3.1.1-hadoop3.2
