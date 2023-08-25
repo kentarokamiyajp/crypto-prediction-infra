@@ -1,0 +1,93 @@
+version: '3.7'
+services:
+  cassandra1:
+    image: cassandra:4.1.0
+    container_name: cassandra1
+    hostname: cassandra1
+    ports:
+      - "9042:9042"
+      - "7000:7000"
+    volumes:
+      - ${CASSANDRA1_HOME}/data:/var/lib/cassandra
+      - ${CASSANDRA1_HOME}/etc:/etc/cassandra
+    networks:
+      shared-network:
+        ipv4_address: ${CASSANDRA1_HOST}
+    environment:
+      &environment
+      CASSANDRA_SEEDS: "cassandra1,cassandra2,cassandra3"
+      CASSANDRA_CLUSTER_NAME: SolarSystem
+      CASSANDRA_DC: Mars
+      CASSANDRA_RACK: rack1
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+      CASSANDRA_NUM_TOKENS: 128
+      HEAP_NEWSIZE: 1G
+      MAX_HEAP_SIZE: 2G
+  cassandra2:
+    image: cassandra:4.1.0
+    container_name: cassandra2
+    hostname: cassandra2
+    networks:
+      shared-network:
+        ipv4_address: ${CASSANDRA2_HOST}
+    ports:
+      - "9043:9042"
+      - "7001:7000"
+    volumes:
+      - ${CASSANDRA2_HOME}/data:/var/lib/cassandra
+      - ${CASSANDRA2_HOME}/etc:/etc/cassandra
+    environment: *environment
+    depends_on:
+      - cassandra1
+  cassandra3:
+    image: cassandra:4.1.0
+    container_name: cassandra3
+    hostname: cassandra3
+    networks:
+      shared-network:
+        ipv4_address: ${CASSANDRA3_HOST}
+    ports:
+      - "9044:9042"
+      - "7002:7000"
+    volumes:
+      - ${CASSANDRA3_HOME}/data:/var/lib/cassandra
+      - ${CASSANDRA3_HOME}/etc:/etc/cassandra
+    environment: *environment
+    depends_on:
+      - cassandra2
+  cassandra4:
+    image: cassandra:4.1.0
+    container_name: cassandra4
+    hostname: cassandra4
+    networks:
+      shared-network:
+        ipv4_address: ${CASSANDRA4_HOST}
+    ports:
+      - "9045:9042"
+      - "7003:7000"
+    volumes:
+      - ${CASSANDRA4_HOME}/data:/var/lib/cassandra
+      - ${CASSANDRA4_HOME}/etc:/etc/cassandra
+    environment: *environment
+    depends_on:
+      - cassandra3
+  cassandra5:
+    image: cassandra:4.1.0
+    container_name: cassandra5
+    hostname: cassandra5
+    networks:
+      shared-network:
+        ipv4_address: ${CASSANDRA5_HOST}
+    ports:
+      - "9046:9042"
+      - "7004:7000"
+    volumes:
+      - ${CASSANDRA5_HOME}/data:/var/lib/cassandra
+      - ${CASSANDRA5_HOME}/etc:/etc/cassandra
+    environment: *environment
+    depends_on:
+      - cassandra4
+
+networks:
+  shared-network:
+    external: true
