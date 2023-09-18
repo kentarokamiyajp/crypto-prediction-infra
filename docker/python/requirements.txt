@@ -16,3 +16,4 @@ yfinance==0.2.22
 pandas-market-calendars==4.1.4
 trino==0.326.0
 python-dotenv==0.21.1
+poloniexapi==0.5.7
