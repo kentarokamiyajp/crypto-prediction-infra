@@ -15,7 +15,7 @@ services:
         ipv4_address: ${CASSANDRA1_HOST}
     environment:
       &environment
-      CASSANDRA_SEEDS: "cassandra1,cassandra2,cassandra3"
+      CASSANDRA_SEEDS: "cassandra1,cassandra2"
       CASSANDRA_CLUSTER_NAME: SolarSystem
       CASSANDRA_DC: Mars
       CASSANDRA_RACK: rack1
@@ -55,38 +55,6 @@ services:
     environment: *environment
     depends_on:
       - cassandra2
-  cassandra4:
-    image: cassandra:4.1.0
-    container_name: cassandra4
-    hostname: cassandra4
-    networks:
-      shared-network:
-        ipv4_address: ${CASSANDRA4_HOST}
-    ports:
-      - "9045:9042"
-      - "7003:7000"
-    volumes:
-      - ${CASSANDRA4_HOME}/data:/var/lib/cassandra
-      - ${CASSANDRA4_HOME}/etc:/etc/cassandra
-    environment: *environment
-    depends_on:
-      - cassandra3
-  cassandra5:
-    image: cassandra:4.1.0
-    container_name: cassandra5
-    hostname: cassandra5
-    networks:
-      shared-network:
-        ipv4_address: ${CASSANDRA5_HOST}
-    ports:
-      - "9046:9042"
-      - "7004:7000"
-    volumes:
-      - ${CASSANDRA5_HOME}/data:/var/lib/cassandra
-      - ${CASSANDRA5_HOME}/etc:/etc/cassandra
-    environment: *environment
-    depends_on:
-      - cassandra4
 
 networks:
   shared-network:
