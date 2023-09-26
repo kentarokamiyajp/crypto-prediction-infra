@@ -8,7 +8,7 @@ services:
       - "9042:9042"
       - "7000:7000"
     volumes:
-      - cassandra_data1:/var/lib/cassandra
+      - ${CASSANDRA1_HOME}/data:/var/lib/cassandra
       - ${CASSANDRA1_HOME}/etc:/etc/cassandra
     networks:
       shared-network:
@@ -34,7 +34,7 @@ services:
       - "9043:9042"
       - "7001:7000"
     volumes:
-      - cassandra_data2:/var/lib/cassandra
+      - ${CASSANDRA2_HOME}/data:/var/lib/cassandra
       - ${CASSANDRA2_HOME}/etc:/etc/cassandra
     environment: *environment
     depends_on:
@@ -50,19 +50,11 @@ services:
       - "9044:9042"
       - "7002:7000"
     volumes:
-      - cassandra_data3:/var/lib/cassandra
+      - ${CASSANDRA3_HOME}/data:/var/lib/cassandra
       - ${CASSANDRA3_HOME}/etc:/etc/cassandra
     environment: *environment
     depends_on:
       - cassandra2
-
-volumes:
-    cassandra_data1:
-      external: true
-    cassandra_data2:
-      external: true
-    cassandra_data3:
-      external: true
 
 networks:
   shared-network:

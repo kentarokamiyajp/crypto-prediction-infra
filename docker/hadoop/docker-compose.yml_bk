@@ -6,7 +6,7 @@ services:
         container_name: namenode
         restart: always
         volumes:
-            - hdp_namenode:/hadoop/dfs/name
+            - ${HODOOP_VOLUME_HOME}/hadoop_namenode:/hadoop/dfs/name
             - ${REPOSITORY_HOME}:/home/hadoop/git
             - ${EXTERNAL_DATA}:/home/hadoop/ext_dataset
         environment:
@@ -28,7 +28,7 @@ services:
         depends_on:
             - namenode
         volumes:
-            - hdp_datanode1:/hadoop/dfs/data
+            - ${HODOOP_VOLUME_HOME}/hadoop_datanode1:/hadoop/dfs/data
         environment:
             SERVICE_PRECONDITION: "namenode:9870"
         ports:
@@ -47,7 +47,7 @@ services:
         depends_on:
             - namenode
         volumes:
-            - hdp_datanode2:/hadoop/dfs/data
+            - ${HODOOP_VOLUME_HOME}/hadoop_datanode2:/hadoop/dfs/data
         environment:
             SERVICE_PRECONDITION: "namenode:9870"
         ports:
@@ -65,7 +65,7 @@ services:
         depends_on:
             - namenode
         volumes:
-            - hdp_datanode3:/hadoop/dfs/data
+            - ${HODOOP_VOLUME_HOME}/hadoop_datanode3:/hadoop/dfs/data
         environment:
             SERVICE_PRECONDITION: "namenode:9870"
         ports:
@@ -111,7 +111,7 @@ services:
         environment:
             SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
         volumes:
-            - hdp_historyserver:/hadoop/yarn/timeline
+            - ${HODOOP_VOLUME_HOME}/hadoop_historyserver:/hadoop/yarn/timeline
         ports:
             - 8188:8188
         env_file:
@@ -159,7 +159,7 @@ services:
         image: bde2020/hive-metastore-postgresql:2.3.0
         container_name: hive-metastore-postgresql
         volumes:
-            - hdp_hive_metastore:/var/lib/postgresql/data
+            - ${HODOOP_VOLUME_HOME}/hive_metastore:/var/lib/postgresql/data
         networks:
             shared-network:
                 ipv4_address: ${HIVE_METASTORE_POSTGRESQL_HOST}
@@ -294,20 +294,6 @@ services:
         networks:
             shared-network:
                 ipv4_address: ${SPARK_HISTORY_SERVER_HOST}
-
-volumes:
-    hdp_namenode:
-        external: true
-    hdp_datanode1:
-        external: true
-    hdp_datanode2:
-        external: true
-    hdp_datanode3:
-        external: true
-    hdp_historyserver:
-        external: true
-    hdp_hive_metastore:
-        external: true
 
 networks:
     shared-network:
