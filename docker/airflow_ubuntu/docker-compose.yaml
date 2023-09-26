@@ -65,9 +65,9 @@ x-airflow-common:
   volumes:
     - ${GIT_HOME}:/opt/airflow/git
     - ${AIRLFOW_DAGS_HOME}:/opt/airflow/dags
-    - ${AIRFLOW_VOLUME_HOME}/logs:/opt/airflow/logs
-    - ${AIRFLOW_VOLUME_HOME}/plugins:/opt/airflow/plugins
-    - ${AIRFLOW_VOLUME_HOME}/data:/opt/airflow/data
+    - airflow_logs:/opt/airflow/logs
+    - airflow_plugins:/opt/airflow/plugins
+    - airflow_data:/opt/airflow/data
     - ${POLONIEX_SDK_HOME}:/home/polo_sdk
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
@@ -86,7 +86,7 @@ services:
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
-      - ${AIRFLOW_VOLUME_HOME}/postgresql/data:/var/lib/postgresql/data
+      - airflow_postgresql:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "airflow" ]
       interval: 5s
@@ -100,7 +100,7 @@ services:
     container_name: airflow-redis
     image: redis:latest
     volumes:
-      - ${AIRFLOW_VOLUME_HOME}/redis/data:/data
+      - airflow_redis:/data
     expose:
       - 6379
     healthcheck:
@@ -368,6 +368,18 @@ services:
     networks:
       shared-network:
         ipv4_address: ${FLOWER_HOST}
+
+volumes:
+    airflow_logs:
+      external: true
+    airflow_plugins:
+      external: true
+    airflow_data:
+      external: true
+    airflow_postgresql:
+      external: true
+    airflow_redis:
+      external: true
 
 networks:
   shared-network:

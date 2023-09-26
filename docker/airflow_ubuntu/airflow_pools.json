@@ -13,7 +13,7 @@
     },
     "pyspark_pool": {
         "description": "",
-        "slots": 1
+        "slots": 5
     },
     "trino_pool": {
         "description": "",
