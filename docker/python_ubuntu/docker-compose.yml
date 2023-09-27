@@ -1,0 +1,23 @@
+version: "3"
+services:
+  python3:
+    build:
+      dockerfile: Dockerfile
+    container_name: "python3"
+    tty: true
+    privileged: true
+    volumes:
+      - ${GIT_HOME}:/home/${PYUSER}/git
+    networks:
+      shared-network:
+        ipv4_address: ${PYTHON_HOST}
+    ports:
+      - '30022:22'
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+
+networks:
+  shared-network:
+    external: true
