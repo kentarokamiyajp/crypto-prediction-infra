@@ -45,7 +45,7 @@ COPY init.sh /home/$USERNAME/
 COPY init_bashrc /home/$USERNAME/
 COPY requirements.txt /home/$USERNAME/src/
 
-RUN echo source ~/init.sh >> /home/$USERNAME/.profile
+RUN echo "sh ~/init.sh" >> /home/$USERNAME/.profile
 
 RUN wget https://downloads.apache.org/kafka/3.5.1/kafka_2.13-3.5.1.tgz
 RUN tar xvf kafka_2.13-3.5.1.tgz

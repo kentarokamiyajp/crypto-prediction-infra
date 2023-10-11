@@ -6,8 +6,12 @@ docker/airflow_ubuntu/authorized_keys
 docker/airflow_ubuntu/.ssh
 docker/kafka/authorized_keys
 docker/kafka/.env
+docker/kafka_ubuntu/authorized_keys
+docker/kafka_ubuntu/.env
 docker/python/authorized_keys
 docker/python/.env
+docker/python_ubuntu/authorized_keys
+docker/python_ubuntu/.env
 docker/trino/authorized_keys
 docker/trino/.env
 docker/cassandra/.env
