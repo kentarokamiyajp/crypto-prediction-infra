@@ -135,7 +135,7 @@ services:
       - kafka3
     networks:
       shared-network:
-        ipv4_address: ${KAFKADROP_HOST}
+        ipv4_address: ${KAFDROP_HOST}
 
 volumes:
     kafka_data1:
