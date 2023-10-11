@@ -1,0 +1,149 @@
+version: '3.7'
+services:
+  kafka1:
+    container_name: kafka1
+    build:
+      dockerfile: Dockerfile
+    hostname: kafka1
+    privileged: true
+    tty: true
+    healthcheck:
+      test: ps augwwx | egrep [S]upportedKafka
+    ports:
+      - '9081:9081'
+      - '9922:22'
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka1:19081,LISTENER_DOCKER_EXTERNAL://${UBUNTU_LOCAL_HOST}:9081
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181/kafka"
+      KAFKA_BROKER_ID: 1
+      BOOTSTRAP_SERVERS: kafka1:9081,kafka2:9082,kafka3:9084
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      ZOOKEEPER: 2181
+    volumes:
+      - kafka_data1:/var/lib/kafka/data
+    depends_on:
+      - kafka-zookeeper
+    networks:
+      kafka-network:
+      shared-network:
+        ipv4_address: ${KAFKA_BROKER_HOST1}
+
+  kafka2:
+    container_name: kafka2
+    build:
+      dockerfile: Dockerfile
+    hostname: kafka2
+    privileged: true
+    tty: true
+    healthcheck:
+      test: ps augwwx | egrep [S]upportedKafka
+    ports:
+      - '9082:9082'
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka2:19082,LISTENER_DOCKER_EXTERNAL://${UBUNTU_LOCAL_HOST}:9082
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181/kafka"
+      KAFKA_BROKER_ID: 2
+      BOOTSTRAP_SERVERS: kafka1:9081,kafka2:9082,kafka3:9084
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      ZOOKEEPER: 2181
+    volumes:
+      - kafka_data2:/var/lib/kafka/data
+    depends_on:
+      - kafka-zookeeper
+    networks:
+      kafka-network:
+      shared-network:
+        ipv4_address: ${KAFKA_BROKER_HOST2}
+
+  kafka3:
+    container_name: kafka3
+    build:
+      dockerfile: Dockerfile
+    hostname: kafka3
+    privileged: true
+    tty: true
+    healthcheck:
+      test: ps augwwx | egrep [S]upportedKafka
+    ports:
+      - '9084:9084'
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka3:19084,LISTENER_DOCKER_EXTERNAL://${UBUNTU_LOCAL_HOST}:9084
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181/kafka"
+      KAFKA_BROKER_ID: 3
+      BOOTSTRAP_SERVERS: kafka1:9081,kafka2:9082,kafka3:9084
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      ZOOKEEPER: 2181
+    volumes:
+      - kafka_data3:/var/lib/kafka/data
+    depends_on:
+      - kafka-zookeeper
+    networks:
+      kafka-network:
+      shared-network:
+        ipv4_address: ${KAFKA_BROKER_HOST3}
+
+  kafka-zookeeper:
+    image: 'confluentinc/cp-zookeeper:latest'
+    hostname: zookeeper
+    container_name: kafka-zookeeper
+    healthcheck:
+      test: echo stat | nc localhost 2181
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    environment:
+      - ZOOKEEPER_SERVER_ID=1
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+      - ZOOKEEPER_INIT_LIMIT=5
+      - ZOOKEEPER_SYNC_LIMIT=2
+      - ZOOKEEPER_SERVERS=zookeeper:2888:3888
+    networks:
+      shared-network:
+        ipv4_address: ${KAFKA_ZOOKEEPER_HOST}
+
+  kafka-cluster-manager:
+    image: 'kafkamanager/kafka-manager:3.0.0.4'
+    restart: unless-stopped
+    container_name: kafka-cluster-manager
+    environment:
+      ZK_HOSTS: zookeeper:2181
+    networks:
+      shared-network:
+        ipv4_address: ${KAFKA_MANAGER_HOST}
+
+  kafdrop:
+    container_name: kafdrop
+    image: obsidiandynamics/kafdrop:latest
+    restart: "no"
+    ports:
+      - "9991:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka1:9081,kafka2:9082,kafka3:9084
+      JVM_OPTS: "-Xms32M -Xmx64M"
+      SERVER_SERVLET_CONTEXTPATH: /
+    depends_on:
+      - kafka1
+      - kafka2
+      - kafka3
+    networks:
+      shared-network:
+        ipv4_address: ${KAFKADROP_HOST}
+
+volumes:
+    kafka_data1:
+    kafka_data2:
+    kafka_data3:
+
+networks:
+  kafka-network:
+    driver: bridge
+  shared-network:
+    external: true

@@ -8,15 +8,13 @@ services:
     privileged: true
     volumes:
       - ${GIT_HOME}:/home/${PYUSER}/git
+      - ${DOCKER_VOLUME_HOME}/kafka:/home/${PYUSER}/kafka
+      - ${DOCKER_VOLUME_HOME}/python_packages/polo-sdk-python:/home/polo_sdk
     networks:
       shared-network:
         ipv4_address: ${PYTHON_HOST}
     ports:
       - '30022:22'
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
 
 networks:
   shared-network:
