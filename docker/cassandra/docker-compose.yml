@@ -21,7 +21,7 @@ services:
       CASSANDRA_NUM_TOKENS: 128
       CASSANDRA_LISTEN_ADDRESS: ${CASSANDRA_HOST1}
       CASSANDRA_BROADCAST_ADDRESS: ${CASSANDRA_HOST1}
-      CASSANDRA_BROADCAST_RPC_ADDRESS: ${MAC_LOCAL_HOST} # Need to use Host IP address to access from external hosts.
+      CASSANDRA_BROADCAST_RPC_ADDRESS: ${LOCAL_HOST} # Need to use Host IP address to access from external hosts.
       CASSANDRA_NATIVE_TRANSPORT_PORT: 9042
       HEAP_NEWSIZE: 1G
       MAX_HEAP_SIZE: 2G
@@ -42,7 +42,7 @@ services:
       CASSANDRA_NUM_TOKENS: 128
       CASSANDRA_LISTEN_ADDRESS: ${CASSANDRA_HOST2}
       CASSANDRA_BROADCAST_ADDRESS: ${CASSANDRA_HOST2}
-      CASSANDRA_BROADCAST_RPC_ADDRESS: ${MAC_LOCAL_HOST} # Need to use Host IP address to access from external hosts.
+      CASSANDRA_BROADCAST_RPC_ADDRESS: ${LOCAL_HOST} # Need to use Host IP address to access from external hosts.
       CASSANDRA_NATIVE_TRANSPORT_PORT: 9043
       HEAP_NEWSIZE: 1G
       MAX_HEAP_SIZE: 2G
@@ -70,7 +70,7 @@ services:
       CASSANDRA_NUM_TOKENS: 128
       CASSANDRA_LISTEN_ADDRESS: ${CASSANDRA_HOST3}
       CASSANDRA_BROADCAST_ADDRESS: ${CASSANDRA_HOST3}
-      CASSANDRA_BROADCAST_RPC_ADDRESS: ${MAC_LOCAL_HOST} # Need to use Host IP address to access from external hosts.
+      CASSANDRA_BROADCAST_RPC_ADDRESS: ${LOCAL_HOST} # Need to use Host IP address to access from external hosts.
       CASSANDRA_NATIVE_TRANSPORT_PORT: 9044
       HEAP_NEWSIZE: 1G
       MAX_HEAP_SIZE: 2G
