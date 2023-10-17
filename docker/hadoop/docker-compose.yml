@@ -220,6 +220,8 @@ services:
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER1_HOST}
+        volumes:
+            - spark_worker_log1:/opt/spark/work
 
     spark-worker-2:
         build:
@@ -246,6 +248,8 @@ services:
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER2_HOST}
+        volumes:
+            - spark_worker_log2:/opt/spark/work
 
     spark-worker-3:
         build:
@@ -272,6 +276,8 @@ services:
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER3_HOST}
+        volumes:
+            - spark_worker_log3:/opt/spark/work
 
     spark-worker-4:
         build:
@@ -298,6 +304,8 @@ services:
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER4_HOST}
+        volumes:
+            - spark_worker_log4:/opt/spark/work
 
     spark-worker-5:
         build:
@@ -324,6 +332,8 @@ services:
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER5_HOST}
+        volumes:
+            - spark_worker_log5:/opt/spark/work
 
     spark-history-server:
         image: bambrow/spark-history-server:3.1.1-hadoop3.2
@@ -351,6 +361,16 @@ volumes:
     hdp_historyserver:
         external: true
     hdp_hive_metastore:
+        external: true
+    spark_worker_log1:
+        external: true
+    spark_worker_log2:
+        external: true
+    spark_worker_log3:
+        external: true
+    spark_worker_log4:
+        external: true
+    spark_worker_log5:
         external: true
 
 networks:
