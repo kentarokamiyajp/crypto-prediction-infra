@@ -12,6 +12,8 @@ docker/python/authorized_keys
 docker/python/.env
 docker/python_ubuntu/authorized_keys
 docker/python_ubuntu/.env
+docker/pyspark_jupyter/authorized_keys
+docker/pyspark_jupyter/.env
 docker/trino/authorized_keys
 docker/trino/.env
 docker/cassandra/.env

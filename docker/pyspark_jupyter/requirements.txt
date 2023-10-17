@@ -1,5 +1,4 @@
 cassandra-driver==3.25.0
-confluent-kafka==1.9.2
 cqlsh==6.1.0
 mysql-connector-python==8.0.31
 numpy==1.21.1
@@ -10,12 +9,6 @@ requests==2.31.0
 six==1.16.0
 SQLAlchemy==1.4.44
 urllib3==1.26.14
-websockets==11.0.3
-yahoofinancials==1.15
-yfinance==0.2.22
-pandas-market-calendars==3.4
 trino==0.326.0
-apache-airflow-providers-apache-spark==4.1.0
-stock-indicators==1.0.1
-scikit-learn==1.0.2
-lightgbm==4.0.0
+python-dotenv==0.21.1
+notebook==6.5.6
