@@ -11,7 +11,7 @@ services:
             - ${REPOSITORY_HOME}:/home/hadoop/git
             - ${EXTERNAL_DATA}:/home/hadoop/ext_dataset
         environment:
-            - CLUSTER_NAME=HDP_KEN
+            - CLUSTER_NAME=HDP_JP_1
         ports:
             - 9870:9870
             - 9000:9000
