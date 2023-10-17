@@ -4,13 +4,14 @@ services:
         build:
             dockerfile: Dockerfile_namenode
         container_name: namenode
+        hostname: namenode
         restart: always
         volumes:
             - hdp_namenode:/hadoop/dfs/name
             - ${REPOSITORY_HOME}:/home/hadoop/git
             - ${EXTERNAL_DATA}:/home/hadoop/ext_dataset
         environment:
-            - CLUSTER_NAME=test
+            - CLUSTER_NAME=HDP_JP_1
         ports:
             - 9870:9870
             - 9000:9000
@@ -24,6 +25,7 @@ services:
     datanode1:
         image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
         container_name: datanode1
+        hostname: datanode1
         restart: always
         depends_on:
             - namenode
@@ -43,6 +45,7 @@ services:
     datanode2:
         image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
         container_name: datanode2
+        hostname: datanode2
         restart: always
         depends_on:
             - namenode
@@ -61,6 +64,7 @@ services:
     datanode3:
         image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
         container_name: datanode3
+        hostname: datanode3
         restart: always
         depends_on:
             - namenode
@@ -79,6 +83,7 @@ services:
     resourcemanager:
         image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
         container_name: resourcemanager
+        hostname: resourcemanager
         restart: always
         environment:
             SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
@@ -93,6 +98,7 @@ services:
     nodemanager:
         image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
         container_name: nodemanager
+        hostname: nodemanager
         restart: always
         environment:
             SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
@@ -107,6 +113,7 @@ services:
     historyserver:
         image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
         container_name: historyserver
+        hostname: historyserver
         restart: always
         environment:
             SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
@@ -123,6 +130,7 @@ services:
     hive-server:
         image: bde2020/hive:2.3.2-postgresql-metastore
         container_name: hive-server
+        hostname: hive-server
         restart: always
         depends_on:
             - namenode
@@ -143,6 +151,7 @@ services:
     hive-metastore:
         image: bde2020/hive:2.3.2-postgresql-metastore
         container_name: hive-metastore
+        hostname: hive-metastore
         restart: always
         environment:
             SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 hive-metastore-postgresql:5432"
@@ -158,6 +167,7 @@ services:
     hive-metastore-postgresql:
         image: bde2020/hive-metastore-postgresql:2.3.0
         container_name: hive-metastore-postgresql
+        hostname: hive-metastore-postgresql
         volumes:
             - hdp_hive_metastore:/var/lib/postgresql/data
         networks:
@@ -168,6 +178,7 @@ services:
         build:
             dockerfile: Dockerfile_spark_base
         container_name: spark-master
+        hostname: spark-master
         ports:
         - 8080:8080
         - 7077:7077
@@ -186,8 +197,14 @@ services:
         build:
             dockerfile: Dockerfile_spark_base
         container_name: spark-worker-1
+        hostname: spark-worker-1
+        extra_hosts:
+            - "spark-worker-1:${LOCAL_HOST}"
         env_file:
             - ./hadoop.env
+        ports:
+        - 18081:18081
+        - 7001:7001
         depends_on:
         - spark-master
         environment:
@@ -197,17 +214,25 @@ services:
         - SPARK_DRIVER_MEMORY=10G
         - SPARK_EXECUTOR_MEMORY=10G
         - SPARK_WORKLOAD=worker
-        - SPARK_LOCAL_IP=spark-worker-1
+        - SPARK_WORKER_WEBUI_PORT=18081
+        - SPARK_WORKER_PORT=7001
+        - SPARK_LOCAL_HOSTNAME=spark-worker-1
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER1_HOST}
+        volumes:
+            - spark_worker_log1:/opt/spark/work
 
     spark-worker-2:
         build:
             dockerfile: Dockerfile_spark_base
         container_name: spark-worker-2
+        hostname: spark-worker-2
         env_file:
             - ./hadoop.env
+        ports:
+        - 18082:18082
+        - 7002:7002
         depends_on:
         - spark-master
         environment:
@@ -217,17 +242,25 @@ services:
         - SPARK_DRIVER_MEMORY=10G
         - SPARK_EXECUTOR_MEMORY=10G
         - SPARK_WORKLOAD=worker
-        - SPARK_LOCAL_IP=spark-worker-2
+        - SPARK_WORKER_WEBUI_PORT=18082
+        - SPARK_WORKER_PORT=7002
+        - SPARK_LOCAL_HOSTNAME=spark-worker-2
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER2_HOST}
+        volumes:
+            - spark_worker_log2:/opt/spark/work
 
     spark-worker-3:
         build:
             dockerfile: Dockerfile_spark_base
         container_name: spark-worker-3
+        hostname: spark-worker-3
         env_file:
             - ./hadoop.env
+        ports:
+        - 18083:18083
+        - 7003:7003
         depends_on:
         - spark-master
         environment:
@@ -237,19 +270,27 @@ services:
         - SPARK_DRIVER_MEMORY=10G
         - SPARK_EXECUTOR_MEMORY=10G
         - SPARK_WORKLOAD=worker
-        - SPARK_LOCAL_IP=spark-worker-3
+        - SPARK_WORKER_WEBUI_PORT=18083
+        - SPARK_WORKER_PORT=7003
+        - SPARK_LOCAL_HOSTNAME=spark-worker-3
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER3_HOST}
+        volumes:
+            - spark_worker_log3:/opt/spark/work
 
     spark-worker-4:
         build:
             dockerfile: Dockerfile_spark_base
         container_name: spark-worker-4
+        hostname: spark-worker-4
         env_file:
             - ./hadoop.env
         depends_on:
         - spark-master
+        ports:
+        - 18084:18084
+        - 7004:7004
         environment:
         - SPARK_MASTER=spark://spark-master:7077
         - SPARK_WORKER_CORES=2
@@ -257,19 +298,27 @@ services:
         - SPARK_DRIVER_MEMORY=10G
         - SPARK_EXECUTOR_MEMORY=10G
         - SPARK_WORKLOAD=worker
-        - SPARK_LOCAL_IP=spark-worker-4
+        - SPARK_WORKER_WEBUI_PORT=18084
+        - SPARK_WORKER_PORT=7004
+        - SPARK_LOCAL_HOSTNAME=spark-worker-4
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER4_HOST}
+        volumes:
+            - spark_worker_log4:/opt/spark/work
 
     spark-worker-5:
         build:
             dockerfile: Dockerfile_spark_base
         container_name: spark-worker-5
+        hostname: spark-worker-5
         env_file:
             - ./hadoop.env
         depends_on:
         - spark-master
+        ports:
+        - 18085:18085
+        - 7005:7005
         environment:
         - SPARK_MASTER=spark://spark-master:7077
         - SPARK_WORKER_CORES=2
@@ -277,14 +326,19 @@ services:
         - SPARK_DRIVER_MEMORY=10G
         - SPARK_EXECUTOR_MEMORY=10G
         - SPARK_WORKLOAD=worker
-        - SPARK_LOCAL_IP=spark-worker-5
+        - SPARK_WORKER_WEBUI_PORT=18085
+        - SPARK_WORKER_PORT=7005
+        - SPARK_LOCAL_HOSTNAME=spark-worker-5
         networks:
             shared-network:
                 ipv4_address: ${SPARK_WORKER5_HOST}
+        volumes:
+            - spark_worker_log5:/opt/spark/work
 
     spark-history-server:
         image: bambrow/spark-history-server:3.1.1-hadoop3.2
         container_name: spark-history-server
+        hostname: spark-history-server
         depends_on:
             - spark-master
         ports:
@@ -307,6 +361,16 @@ volumes:
     hdp_historyserver:
         external: true
     hdp_hive_metastore:
+        external: true
+    spark_worker_log1:
+        external: true
+    spark_worker_log2:
+        external: true
+    spark_worker_log3:
+        external: true
+    spark_worker_log4:
+        external: true
+    spark_worker_log5:
         external: true
 
 networks:
