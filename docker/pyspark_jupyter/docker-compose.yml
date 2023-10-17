@@ -1,0 +1,20 @@
+version: "3"
+services:
+  pyspark_notebook:
+    build:
+      dockerfile: Dockerfile
+    container_name: "pyspark_notebook"
+    tty: true
+    privileged: true
+    volumes:
+      - ${GIT_HOME}:/home/${PYSPARK_JUPYTER_USER}/git
+      - ./conf:/usr/local/spark/conf
+    networks:
+      shared-network:
+        ipv4_address: ${PYSPARK_JUPYTER_HOST}
+    ports:
+      - '19999:9999'
+
+networks:
+  shared-network:
+    external: true
