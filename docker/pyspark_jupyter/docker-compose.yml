@@ -7,6 +7,8 @@ services:
     hostname: pyspark_notebook
     tty: true
     privileged: true
+    environment:
+      SPARK_LOCAL_HOSTNAME: ${PYSPARK_JUPYTER_HOST}
     volumes:
       - ${GIT_HOME}:/home/${PYSPARK_JUPYTER_USER}/git
       - ./conf:/usr/local/spark/conf
