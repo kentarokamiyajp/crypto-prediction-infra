@@ -3,7 +3,8 @@ services:
   pyspark_notebook:
     build:
       dockerfile: Dockerfile
-    container_name: "pyspark_notebook"
+    container_name: pyspark_notebook
+    hostname: pyspark_notebook
     tty: true
     privileged: true
     volumes:
@@ -13,7 +14,7 @@ services:
       shared-network:
         ipv4_address: ${PYSPARK_JUPYTER_HOST}
     ports:
-      - '19999:9999'
+      - '19999:19999'
 
 networks:
   shared-network:
