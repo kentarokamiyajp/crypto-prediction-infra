@@ -80,6 +80,7 @@ x-airflow-common:
 services:
   postgres:
     container_name: airflow-postgres
+    hostname: airflow-postgres
     image: postgres:13
     environment:
       POSTGRES_USER: airflow
@@ -98,6 +99,7 @@ services:
 
   redis:
     container_name: airflow-redis
+    hostname: airflow-redis
     image: redis:latest
     volumes:
       - airflow_redis:/data
@@ -116,6 +118,7 @@ services:
   airflow-webserver:
     <<: *airflow-common
     container_name: airflow-webserver
+    hostname: airflow-webserver
     command: webserver
     ports:
       - '8880:8080'
@@ -144,6 +147,7 @@ services:
   airflow-scheduler:
     <<: *airflow-common
     container_name: airflow-scheduler
+    hostname: airflow-scheduler
     command: scheduler
     ports:
       - '24022:22'
@@ -168,6 +172,7 @@ services:
   airflow-worker-1:
     <<: *airflow-common
     container_name: airflow-worker-1
+    hostname: airflow-worker-1
     command: celery worker
     ports:
       - '25022:22'
@@ -195,6 +200,7 @@ services:
   airflow-worker-2:
     <<: *airflow-common
     container_name: airflow-worker-2
+    hostname: airflow-worker-2
     command: celery worker -q high_cpu
     ports:
       - '26022:22'
@@ -222,6 +228,7 @@ services:
   airflow-triggerer:
     <<: *airflow-common
     container_name: airflow-triggerer
+    hostname: airflow-triggerer
     command: triggerer
     ports:
       - '27022:22'
@@ -327,6 +334,7 @@ services:
   airflow-cli:
     <<: *airflow-common
     container_name: airflow-cli
+    hostname: airflow-cli
     ports:
       - '28022:22'
     profiles:
@@ -349,6 +357,7 @@ services:
   flower:
     <<: *airflow-common
     container_name: airflow-flower
+    hostname: airflow-flower
     command: celery flower
     profiles:
       - flower
