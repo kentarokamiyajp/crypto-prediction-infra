@@ -17,6 +17,7 @@ services:
         ipv4_address: ${PYSPARK_JUPYTER_HOST}
     ports:
       - '19999:19999'
+      - '4041:4040'
 
 networks:
   shared-network:
