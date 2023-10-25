@@ -11,6 +11,10 @@ services:
     volumes:
       - ${TRINO_CONF}/etc:/etc/trino
       - ${HADOOP_CONF}:/etc/hadoop
+    deploy:
+      resources:
+        limits:
+          cpus: '10.0'
     networks:
       shared-network:
         ipv4_address: ${TRINO_HOST}
