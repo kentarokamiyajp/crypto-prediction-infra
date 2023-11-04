@@ -1,4 +1,4 @@
-FROM trinodb/trino:latest
+FROM trinodb/trino:431
 USER root
 
 RUN apt-get update
