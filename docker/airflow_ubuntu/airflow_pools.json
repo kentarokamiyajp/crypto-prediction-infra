@@ -5,7 +5,7 @@
     },
     "poloniex_pool": {
         "description": "",
-        "slots": 1
+        "slots": 2
     },
     "yfinance_pool": {
         "description": "",
