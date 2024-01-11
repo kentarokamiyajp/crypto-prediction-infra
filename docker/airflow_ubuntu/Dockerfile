@@ -2,7 +2,9 @@ FROM apache/airflow:2.5.2
 USER root
 
 RUN apt-get update
-RUN apt-get -y install locales-all && apt-get -y install locales nano vim less sudo default-jdk wget scala apt-utils curl libgomp1
+RUN apt-get -y install locales-all
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends locales vim less sudo default-jdk wget git build-essential libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev libgdbm-dev libbz2-dev liblzma-dev zlib1g-dev  nano uuid-dev libffi-dev libdb-dev scala apt-utils curl libgomp1
 
 # Add user
 ARG USERNAME=air
@@ -48,6 +50,26 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install -r requirements.txt
+
+# install virtualenv for other python versions
+# install pyenv
+RUN git clone https://github.com/pyenv/pyenv.git /opt/airflow/.pyenv
+ENV PYENV_ROOT="/opt/airflow/.pyenv"
+ENV PATH="$PYENV_ROOT/bin:$PATH"
+RUN echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+RUN eval "$(pyenv init -)"
+RUN pyenv install 3.10.13
+
+# install pyenv-virtualenv
+RUN git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+RUN echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+RUN eval "$(pyenv virtualenv-init -)"
+ENV PATH="$PYENV_ROOT/plugins/pyenv-virtualenv/bin:$PATH"
+
+# create a virtual env for dbt
+RUN pyenv virtualenv 3.10.13 dbtenv
+COPY ./dbt_config/requirements.txt /opt/airflow/
+RUN /opt/airflow/.pyenv/shims/python -m pip install -r requirements.txt --no-user
 
 # set pools
 COPY airflow_pools.json .
