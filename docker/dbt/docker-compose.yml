@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  dbt_host:
+    build:
+      dockerfile: Dockerfile
+    hostname: dbt_host
+    container_name: dbt_host
+    volumes:
+      - ${GIT_HOME}:/home/git
+      - ${GIT_HOME}:/home/dbt_logs
+    networks:
+      shared-network:
+        ipv4_address: "172.30.100.2"
+
+networks:
+  shared-network:
+    external: true
