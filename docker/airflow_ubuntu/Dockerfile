@@ -56,6 +56,8 @@ RUN pip install -r requirements.txt
 RUN git clone https://github.com/pyenv/pyenv.git /opt/airflow/.pyenv
 ENV PYENV_ROOT="/opt/airflow/.pyenv"
 ENV PATH="$PYENV_ROOT/bin:$PATH"
+RUN echo "PYENV_ROOT=/opt/airflow/.pyenv" >> ~/.bashrc
+RUN echo "PATH=/opt/airflow/.pyenv/bin:$PATH" >> ~/.bashrc
 RUN echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 RUN eval "$(pyenv init -)"
 RUN pyenv install 3.10.13
