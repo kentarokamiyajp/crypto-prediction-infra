@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y --no-install-recommends wget build-essential libreadline-dev libkrb5-dev\ 
+RUN apt-get update && apt-get install -y --no-install-recommends wget build-essential libreadline-dev libkrb5-dev \
 libncursesw5-dev libssl-dev libsqlite3-dev libgdbm-dev libbz2-dev liblzma-dev zlib1g-dev uuid-dev libffi-dev libdb-dev nano git
 
 RUN wget --no-check-certificate https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz \
