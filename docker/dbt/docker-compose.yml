@@ -10,7 +10,7 @@ services:
       - ${GIT_HOME}:/home/dbt_logs
     networks:
       shared-network:
-        ipv4_address: "172.30.100.2"
+        ipv4_address: ${DBT_HOST}
 
 networks:
   shared-network:
