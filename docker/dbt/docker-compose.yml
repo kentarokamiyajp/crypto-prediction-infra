@@ -11,6 +11,8 @@ services:
     networks:
       shared-network:
         ipv4_address: ${DBT_HOST}
+    ports:
+      - 8989:8080
 
 networks:
   shared-network:
