@@ -6,8 +6,8 @@ services:
     hostname: dbt_host
     container_name: dbt_host
     volumes:
-      - ${GIT_HOME}:/home/git
-      - ${GIT_HOME}:/home/dbt_logs
+      - ${GIT_HOME}:/home/${DBT_USER}/git
+      - ${GIT_HOME}:/home/${DBT_USER}/dbt_logs
     networks:
       shared-network:
         ipv4_address: ${DBT_HOST}

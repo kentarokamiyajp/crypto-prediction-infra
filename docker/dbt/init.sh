@@ -1,14 +1,11 @@
 #!/bin/bash
 
 # Create venv
-mkdir /home/venvs
-cd /home/venvs
+mkdir /home/dbtuser/venvs
+cd /home/dbtuser/venvs
 python3 -m venv dbt_env
-source /home/venvs/dbt_env/bin/activate
+source /home/dbtuser/venvs/dbt_env/bin/activate
 
 # install python libraries
-cd /home
+cd /home/dbtuser
 pip3 install -r requirements.txt
-
-# sleep forever to keep container running
-while true; do sleep 1; done
