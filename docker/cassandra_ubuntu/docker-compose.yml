@@ -6,6 +6,7 @@ services:
     hostname: cassandra1
     ports:
       - "9042:9042"
+    restart: always
     volumes:
       - cassandra_data1:/var/lib/cassandra
       - ${CASSANDRA_HOME1}/etc:/etc/cassandra
@@ -33,6 +34,7 @@ services:
     networks:
       shared-network:
         ipv4_address: ${CASSANDRA_HOST2}
+    restart: always
     environment:
       CASSANDRA_SEEDS: "cassandra1,cassandra2" # The first two nodes will be seeds
       CASSANDRA_CLUSTER_NAME: SolarSystem
@@ -61,6 +63,7 @@ services:
     networks:
       shared-network:
         ipv4_address: ${CASSANDRA_HOST3}
+    restart: always
     environment:
       CASSANDRA_SEEDS: "cassandra1,cassandra2" # The first two nodes will be seeds
       CASSANDRA_CLUSTER_NAME: SolarSystem
