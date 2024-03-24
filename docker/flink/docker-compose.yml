@@ -1,0 +1,80 @@
+version: "3"
+services:
+  flink-jobmanager:
+    build:
+      dockerfile: Dockerfile
+    container_name: "flink-jobmanager"
+    hostname: "flink-jobmanager"
+    ports:
+      - '8881:8081'
+    command: jobmanager
+    networks:
+      shared-network:
+        ipv4_address: 172.29.2.1
+
+  flink-taskmanager-1:
+    build:
+      dockerfile: Dockerfile
+    container_name: "flink-taskmanager-1"
+    hostname: "flink-taskmanager-1"
+    command: taskmanager
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flink-jobmanager
+        taskmanager.numberOfTaskSlots: 2  
+    networks:
+      shared-network:
+        ipv4_address: 172.29.2.2
+
+  flink-taskmanager-2:
+    build:
+      dockerfile: Dockerfile
+    container_name: "flink-taskmanager-2"
+    hostname: "flink-taskmanager-2"
+    command: taskmanager
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flink-jobmanager
+        taskmanager.numberOfTaskSlots: 2  
+    networks:
+      shared-network:
+        ipv4_address: 172.29.2.3
+
+  flink-taskmanager-3:
+    build:
+      dockerfile: Dockerfile
+    container_name: "flink-taskmanager-3"
+    hostname: "flink-taskmanager-3"
+    command: taskmanager
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flink-jobmanager
+        taskmanager.numberOfTaskSlots: 2  
+    networks:
+      shared-network:
+        ipv4_address: 172.29.2.4
+
+  flink-sql-client:
+    build:
+      dockerfile: Dockerfile
+    command: bin/sql-client.sh
+    depends_on:
+      - flink-jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flink-jobmanager
+        rest.address: jobmanager
+    networks:
+      shared-network:
+        ipv4_address: 172.29.2.5
+
+networks:
+  shared-network:
+    external: true
