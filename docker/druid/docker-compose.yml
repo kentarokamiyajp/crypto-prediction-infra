@@ -82,9 +82,9 @@ services:
     env_file:
       - environment
 
-  druid-historical:
+  druid-historical-1:
     image: apache/druid:29.0.0
-    container_name: druid-historical
+    container_name: druid-historical-1
     volumes:
       - druid_shared:/opt/shared
       - historical_var:/opt/druid/var
@@ -94,6 +94,23 @@ services:
       - druid-coordinator
     ports:
       - "8083:8083"
+    command:
+      - historical
+    env_file:
+      - environment
+
+  druid-historical-2:
+    image: apache/druid:29.0.0
+    container_name: druid-historical-2
+    volumes:
+      - druid_shared:/opt/shared
+      - historical_var:/opt/druid/var
+    depends_on: 
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
+    ports:
+      - "8084:8083"
     command:
       - historical
     env_file:
