@@ -39,19 +39,20 @@ COPY init.sh /home/$USERNAME/
 COPY init_bashrc /home/$USERNAME/
 COPY requirements.txt /home/$USERNAME/src/
 
-RUN echo "sh ~/init.sh" >> /home/$USERNAME/.profile
-
 # install kafka client
 RUN wget https://downloads.apache.org/kafka/3.7.0/kafka_2.13-3.7.0.tgz
 RUN tar xvf kafka_2.13-3.7.0.tgz
-RUN sudo mv kafka_2.13-3.7.0 /usr/local/kafka
+RUN sudo mv kafka_2.13-3.7.0 /home/$USERNAME/kafka
 
 # install hadoop client
 RUN wget https://archive.apache.org/dist/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
 RUN tar zxfv hadoop-3.3.6.tar.gz
-RUN echo "export HADOOP_HOME=/home/$USERNAME/hadoop-3.3.6" >> ~/.bashrc
-RUN echo "alias hdfs=/home/$USERNAME/hadoop-3.3.6/bin/hdfs" >> ~/.bashrc
 COPY hadoop_conf/core-site.xml /home/$USERNAME/hadoop-3.3.6/etc/hadoop/core-site.xml
+
+ENV KAFKA_HOME=/home/$USERNAME/kafka
+ENV HADOOP_HOME=/home/$USERNAME/hadoop-3.3.6
+ENV JAVA_HOME=/usr/local/openjdk-11
+ENV PATH=$PATH:$KAFKA_HOME/bin:$HADOOP_HOME/bin:$JAVA_HOME/bin
 
 EXPOSE 22
 CMD ["sudo", "/usr/sbin/sshd", "-D"]

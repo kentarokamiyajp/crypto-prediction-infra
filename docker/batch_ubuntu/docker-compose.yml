@@ -15,6 +15,11 @@ services:
     networks:
       shared-network:
         ipv4_address: ${BATCH_HOST}
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 10G
 
 networks:
   shared-network:
