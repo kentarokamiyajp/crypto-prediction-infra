@@ -3,6 +3,7 @@ services:
   dbt_host:
     build:
       dockerfile: Dockerfile
+    init : true
     hostname: dbt_host
     container_name: dbt_host
     volumes:

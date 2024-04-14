@@ -8,7 +8,7 @@ else
     echo "Creating pyvenv ..."
     /usr/local/bin/python -m venv pyvenv
     echo "Done"
-    source "${HOME}/pyvenv/bin/activate"
+    . "${HOME}/pyvenv/bin/activate"
 
     # install libraries
     pip install -r "${HOME}/src/requirements.txt"

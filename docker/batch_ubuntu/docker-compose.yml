@@ -3,6 +3,7 @@ services:
   batch:
     build:
       dockerfile: Dockerfile
+    init : true
     container_name: "batch"
     hostname: batch
     tty: true
