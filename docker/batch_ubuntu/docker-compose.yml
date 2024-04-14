@@ -1,0 +1,27 @@
+version: "3"
+services:
+  batch:
+    build:
+      dockerfile: Dockerfile
+    init : true
+    container_name: "batch"
+    hostname: batch
+    tty: true
+    privileged: true
+    volumes:
+      - ${GIT_HOME}:/home/${BATCH_USER}/git
+      - ${DOCKER_VOLUME_HOME}/kafka:/home/${BATCH_USER}/kafka
+      - ${DOCKER_VOLUME_HOME}/python_packages/polo-sdk-python:/home/polo_sdk
+      - ${DOCKER_VOLUME_HOME}/spark:/home/${BATCH_USER}/spark
+    networks:
+      shared-network:
+        ipv4_address: ${BATCH_HOST}
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 10G
+
+networks:
+  shared-network:
+    external: true

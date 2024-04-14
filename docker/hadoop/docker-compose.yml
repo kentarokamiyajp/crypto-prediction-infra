@@ -192,6 +192,8 @@ services:
         networks:
             shared-network:
                 ipv4_address: ${SPARK_MASTER_HOST}
+        volumes:
+            - spark_master_log:/opt/spark/work
                 
     spark-worker-1:
         build:
@@ -361,6 +363,8 @@ volumes:
     hdp_historyserver:
         external: true
     hdp_hive_metastore:
+        external: true
+    spark_master_log:
         external: true
     spark_worker_log1:
         external: true

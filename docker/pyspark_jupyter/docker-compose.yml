@@ -4,6 +4,7 @@ services:
     build:
       dockerfile: Dockerfile
     container_name: pyspark_notebook
+    init : true
     hostname: pyspark_notebook
     tty: true
     privileged: true

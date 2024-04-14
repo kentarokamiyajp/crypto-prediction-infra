@@ -3,6 +3,7 @@ services:
   python3:
     build:
       dockerfile: Dockerfile
+    init : true
     container_name: "python3"
     hostname: python3
     tty: true
