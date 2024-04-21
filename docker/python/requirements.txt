@@ -17,3 +17,5 @@ pandas-market-calendars==4.1.4
 trino==0.326.0
 python-dotenv==0.21.1
 poloniexapi==0.5.7
+apache-flink==1.19.0
+notebook==7.1.2

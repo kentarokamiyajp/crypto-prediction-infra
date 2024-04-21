@@ -16,6 +16,7 @@ services:
         ipv4_address: 172.29.0.9
     ports:
       - '21022:22'
+      - '8888:8888'
     deploy:
       resources:
         limits:

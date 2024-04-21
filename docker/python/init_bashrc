@@ -12,5 +12,6 @@ fi
 
 eval "$(pyenv virtualenv-init -)"
 
+export KAFKA_HOME=/usr/local/kafka
 export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
-export PATH=$PATH:$JAVA_HOME/bin
+export PATH=$PATH:$JAVA_HOME/bin:$KAFKA_HOME/bin
