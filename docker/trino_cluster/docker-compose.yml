@@ -1,0 +1,53 @@
+version: '3.7'
+services:
+  trino_coordinator:
+    build:
+      dockerfile: Dockerfile
+    hostname: trino_coordinator
+    container_name: trino_coordinator
+    ports:
+      - '8881:8080'
+    volumes:
+      - ${TRINO_CONF}/coordinator/etc:/etc/trino
+      - ${HADOOP_CONF}:/etc/hadoop
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+    networks:
+      shared-network:
+        ipv4_address: ${TRINO_COORDINATOR}
+  trino_worker_1:
+    build:
+      dockerfile: Dockerfile
+    hostname: trino_worker_1
+    container_name: trino_worker_1
+    volumes:
+      - ${TRINO_CONF}/worker_1/etc:/etc/trino
+      - ${HADOOP_CONF}:/etc/hadoop
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+    networks:
+      shared-network:
+        ipv4_address: ${TRINO_WORKER_1}
+  trino_worker_2:
+    build:
+      dockerfile: Dockerfile
+    hostname: trino_worker_2
+    container_name: trino_worker_2
+    volumes:
+      - ${TRINO_CONF}/worker_2/etc:/etc/trino
+      - ${HADOOP_CONF}:/etc/hadoop
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+    networks:
+      shared-network:
+        ipv4_address: ${TRINO_WORKER_2}
+
+networks:
+  shared-network:
+    external: true
