@@ -30,6 +30,6 @@ RUN source /root/.bash_profile
 EXPOSE 22
 
 WORKDIR /home/$USERNAME/
-RUN wget https://dlcdn.apache.org/kafka/3.5.0/kafka_2.13-3.5.0.tgz
-RUN tar xzf kafka_2.13-3.5.0.tgz
-ENV PATH=$PATH:/home/$USERNAME/kafka_2.13-3.5.0/bin
+RUN wget https://dlcdn.apache.org/kafka/3.6.2/kafka_2.13-3.6.2.tgz
+RUN tar xzf kafka_2.13-3.6.2.tgz
+ENV PATH=$PATH:/home/$USERNAME/kafka_2.13-3.6.2/bin
