@@ -8,7 +8,8 @@ services:
     ports:
       - '8881:8080'
     volumes:
-      - ${TRINO_CONF}/coordinator/etc:/etc/trino
+      - ${TRINO_CONF}/coordinator:/etc/trino
+      - ${TRINO_CONF}/catalog:/etc/trino/catalog
       - ${HADOOP_CONF}:/etc/hadoop
     deploy:
       resources:
@@ -23,7 +24,8 @@ services:
     hostname: trino_worker_1
     container_name: trino_worker_1
     volumes:
-      - ${TRINO_CONF}/worker_1/etc:/etc/trino
+      - ${TRINO_CONF}/worker_1:/etc/trino
+      - ${TRINO_CONF}/catalog:/etc/trino/catalog
       - ${HADOOP_CONF}:/etc/hadoop
     deploy:
       resources:
@@ -38,7 +40,8 @@ services:
     hostname: trino_worker_2
     container_name: trino_worker_2
     volumes:
-      - ${TRINO_CONF}/worker_2/etc:/etc/trino
+      - ${TRINO_CONF}/worker_2:/etc/trino
+      - ${TRINO_CONF}/catalog:/etc/trino/catalog
       - ${HADOOP_CONF}:/etc/hadoop
     deploy:
       resources:

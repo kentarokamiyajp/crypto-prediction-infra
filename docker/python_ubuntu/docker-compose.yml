@@ -17,6 +17,7 @@ services:
         ipv4_address: ${PYTHON_HOST}
     ports:
       - '30022:22'
+      - '8890:8888'
 
 networks:
   shared-network:
