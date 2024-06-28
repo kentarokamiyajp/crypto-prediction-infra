@@ -63,8 +63,11 @@ x-airflow-common:
     AIRFLOW__LOGGING__CELERY_LOGGING_LEVEL: 'INFO'
     AIRFLOW__LOGGING__LOGGING_LEVEL: 'INFO'
   volumes:
-    - ${GIT_HOME}:/opt/airflow/git
+    - ${DWH_MODULES}:/opt/airflow/dwh_modules
     - ${AIRLFOW_DAGS_HOME}:/opt/airflow/dags
+    - ${AIRLFOW_CONF_HOME}:/opt/airflow/conf
+    - ${AIRLFOW_COMMON_FUNCTION_HOME}:/opt/airflow/common_functions
+    - ${AIRLFOW_ETL_SCRIPTS_HOME}:/opt/airflow/etl_scripts
     - airflow_logs:/opt/airflow/logs
     - airflow_plugins:/opt/airflow/plugins
     - airflow_data:/opt/airflow/data
@@ -176,6 +179,7 @@ services:
     command: celery worker
     ports:
       - '25022:22'
+      - '4041:4040'
     healthcheck:
       test:
         - "CMD-SHELL"
@@ -204,6 +208,7 @@ services:
     command: celery worker -q high_cpu
     ports:
       - '26022:22'
+      - '4042:4040'
     healthcheck:
       test:
         - "CMD-SHELL"
