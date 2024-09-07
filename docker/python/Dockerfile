@@ -45,6 +45,10 @@ COPY init.sh /home/$USERNAME/
 COPY init_bashrc /home/$USERNAME/
 COPY requirements.txt /home/$USERNAME/src/
 
+RUN wget https://dlcdn.apache.org/kafka/3.7.0/kafka_2.13-3.7.0.tgz
+RUN tar xzf kafka_2.13-3.7.0.tgz
+ENV PATH=$PATH:/home/$USERNAME/kafka_2.13-3.7.0/bin
+
 RUN echo source ~/init.sh >> /home/$USERNAME/.profile
 
 EXPOSE 22

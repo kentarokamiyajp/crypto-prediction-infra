@@ -2,3 +2,4 @@ docker/*/.env
 docker/*/authorized_keys
 docker/*/.ssh
 local_ubuntu
+docker/flink/source_pkg

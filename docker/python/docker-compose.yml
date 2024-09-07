@@ -8,7 +8,7 @@ services:
     tty: true
     privileged: true
     volumes:
-      - ${PYTHON_VOLUME_HOME}/git:/home/${PYUSER}/git
+      - ${HOME}/git:/home/${PYUSER}/git
       - ${PYTHON_VOLUME_HOME}/kafka:/home/${PYUSER}/kafka
       - ${PYTHON_VOLUME_HOME}/spark:/home/${PYUSER}/spark
       - ${PYTHON_VOLUME_HOME}/python_packages/polo-sdk-python:/home/polo_sdk
